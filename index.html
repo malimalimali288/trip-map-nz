@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>悉尼+新西兰南岛行程地图</title>
+<meta name="description" content="2027年2月7-17日 悉尼一日游 + 新西兰南岛九日自驾游">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+/* ═══════════════════════════════════════════
+   Design System — Apple Style
+   ═══════════════════════════════════════════ */
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f5f7;
+  --bg-tertiary:   #fbfbfd;
+  --bg-grouped:    #f2f2f7;
+  --bg-elevated:   #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary:  #aeaeb2;
+  --accent:        #0071e3;
+  --accent-hover:  #0077ed;
+  --tint-red:    #ff3b30;
+  --tint-orange: #ff9500;
+  --tint-green:  #34c759;
+  --tint-blue:   #007aff;
+  --tint-purple: #af52de;
+  --tint-pink:   #ff2d55;
+  --separator:  rgba(60, 60, 67, .12);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 14px rgba(0,0,0,.08);
+  --shadow-lg:  0 8px 30px rgba(0,0,0,.12);
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "Helvetica Neue", "Arial", sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.47059;
+  letter-spacing: -0.022em;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Map ── */
+#map { width: 100%; height: 40vh; min-height: 280px; position: sticky; top: 0; z-index: 100; }
+.locate-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+  border: none; box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.locate-btn.active { color: #007aff; }
+@keyframes loc-pulse {
+  0%   { transform: scale(1); opacity: .55; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.loc-pulse {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: rgba(0,122,255,.25);
+  animation: loc-pulse 1.6s ease-out infinite;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background: rgba(255,255,255,.85); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px); position: sticky; top: 40vh; z-index: 99;
+  border-bottom: .5px solid var(--separator); scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; padding: 7px 16px; border-radius: 980px; border: none;
+  background: var(--bg-grouped); color: var(--text-secondary);
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: all .25s ease;
+  white-space: nowrap; letter-spacing: -0.01em;
+}
+.tab:active { transform: scale(.96); }
+.tab.active { background: var(--accent); color: #fff; }
+
+/* ── Main content ── */
+.content { max-width: 680px; margin: 0 auto; padding: 16px 16px calc(24px + var(--safe-bottom)); }
+
+/* ── Overview ── */
+.hero { text-align: center; padding: 28px 20px 20px; }
+.hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+.hero .subtitle { font-size: 17px; color: var(--text-secondary); margin-top: 6px; font-weight: 400; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.info-card { background: var(--bg-elevated); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-sm); }
+.info-card .label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 6px; }
+.info-card .value { font-size: 15px; font-weight: 600; line-height: 1.4; }
+
+/* ── Section headers ── */
+.section-head { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .03em; padding: 20px 0 8px; }
+
+/* ── Day header ── */
+.day-head { padding: 20px 0 12px; }
+.day-head h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.day-head p { font-size: 15px; color: var(--text-secondary); margin-top: 2px; }
+
+/* ── Route bar ── */
+.route-bar { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px; box-shadow: var(--shadow-sm); font-size: 13px; color: var(--text-secondary); line-height: 1.7; white-space: pre-line; }
+.route-bar strong { color: var(--text-primary); }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 20px; bottom: 20px; width: 1.5px; background: var(--separator); }
+.tl-item { position: relative; margin-bottom: 10px; }
+.tl-dot { position: absolute; left: -20px; top: 18px; width: 10px; height: 10px; border-radius: 50%; z-index: 1; box-shadow: 0 0 0 3px var(--bg-secondary); }
+.tl-dot.food    { background: var(--tint-red); }
+.tl-dot.spot    { background: var(--tint-blue); }
+.tl-dot.hotel   { background: var(--tint-orange); }
+.tl-dot.drink   { background: var(--tint-purple); }
+.tl-dot.transport { background: var(--text-tertiary); }
+
+/* ── Card ── */
+.card { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); transition: box-shadow .25s ease; cursor: pointer; }
+.card:active { box-shadow: var(--shadow-md); }
+.card .time { font-size: 12px; font-weight: 600; color: var(--text-tertiary); letter-spacing: .01em; }
+.card .name { font-size: 17px; font-weight: 600; margin: 2px 0 4px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; }
+.card .desc { font-size: 14px; color: var(--text-secondary); line-height: 1.45; }
+
+/* Badge */
+.badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
+.badge.food   { background: rgba(255,59,48,.1);  color: var(--tint-red); }
+.badge.spot   { background: rgba(0,122,255,.1);  color: var(--tint-blue); }
+.badge.drink  { background: rgba(175,82,222,.1); color: var(--tint-purple); }
+
+/* Budget */
+.budget { display: inline-block; margin-top: 6px; padding: 3px 10px; background: var(--bg-grouped); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+
+/* Payment */
+.pays { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.pay { font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+.pay.ok  { background: rgba(52,199,89,.1);  color: var(--tint-green); }
+.pay.no  { background: rgba(255,59,48,.08); color: var(--tint-red); }
+.pay.idk { background: rgba(255,149,0,.1);  color: var(--tint-orange); }
+
+/* Links row */
+.links { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+  text-decoration: none !important; transition: filter .2s;
+}
+.btn:active { filter: brightness(.9); }
+.btn.nav    { background: var(--accent); color: #fff; }
+.btn.xhs    { background: #ff2442; color: #fff; }
+.btn.dp     { background: #ffa700; color: #fff; }
+.btn.rsv    { background: var(--tint-green); color: #fff; }
+
+/* Action Sheet */
+.as-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.as-overlay.show { opacity: 1; pointer-events: auto; }
+.as-sheet {
+  width: 100%; max-width: 420px;
+  padding: 0 8px 34px;
+  transform: translateY(100%); transition: transform .3s cubic-bezier(.22,1,.36,1);
+}
+.as-overlay.show .as-sheet { transform: translateY(0); }
+.as-group {
+  background: rgba(255,255,255,.88); backdrop-filter: blur(20px);
+  border-radius: 14px; overflow: hidden; margin-bottom: 8px;
+}
+.as-group .as-item {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px; font-size: 18px; color: #007aff; font-weight: 500;
+  border: none; background: none; width: 100%; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.as-group .as-item + .as-item { border-top: .5px solid rgba(0,0,0,.12); }
+.as-group .as-item:active { background: rgba(0,0,0,.06); }
+.as-cancel { font-weight: 600; }
+
+/* Details — default open */
+.details {
+  margin-top: 10px; padding-top: 10px;
+  border-top: .5px solid var(--separator);
+  font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+}
+.details.closed { display: none; }
+
+/* ── Overview day list ── */
+.day-list .card { margin-bottom: 8px; }
+.day-list .card .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+/* ── Payment summary ── */
+.pay-summary { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+.pay-summary h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.pay-summary .warn { color: var(--tint-red); }
+.pay-summary .ok-text { color: var(--tint-green); }
+
+/* ── Legend ── */
+.legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 8px 0; font-size: 12px; color: var(--text-secondary); }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── Leaflet overrides ── */
+.leaflet-popup-content-wrapper { border-radius: var(--radius-md) !important; box-shadow: var(--shadow-lg) !important; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important; }
+.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; margin: 12px 14px !important; }
+.leaflet-popup-content a { color: var(--accent) !important; }
+.leaflet-popup-tip { background: #fff !important; }
+.leaflet-control-zoom a { width: 34px !important; height: 34px !important; line-height: 34px !important; font-size: 16px !important; border-radius: 10px !important; background: rgba(255,255,255,.85) !important; -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important; border: .5px solid var(--separator) !important; color: var(--text-primary) !important; }
+.leaflet-control-zoom { border-radius: 12px !important; overflow: hidden; box-shadow: var(--shadow-md) !important; border: none !important; }
+.leaflet-control-attribution { font-size: 9px !important; opacity: .5; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="tabs" id="tabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  Trip Data — 悉尼+新西兰南岛 2027.2.7-2.17                  ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const HOTEL = { name: '行程起点', lat: -33.8688, lng: 151.2093 };
+
+const DAYS = [
+  { id: 0, label: '总览', color: '#0071e3', locations: [] },
+
+  // ── Day 1: 悉尼 ──
+  {
+    id: 1, label: 'D1 悉尼', date: '2/8 周一', title: '悉尼一日游', color: '#ff9500',
+    locations: [
+      {
+        name: '悉尼歌剧院', lat: -33.8568, lng: 151.2153, type: 'spot', time: '10:00',
+        desc: '世界文化遗产，外观拍照免费。中文导览AUD$48/人，需上下300级台阶，父母酌情。',
+        budget: '免费参观 / 导览AUD$48',
+        detail: '周一中文导览场次：9:30、11:00、13:00、14:30\n建议提前在官网 sydneyoperahouse.com 预约\n外部拍照最佳角度在麦考瑞夫人角',
+        gmap: 'Sydney+Opera+House+Sydney'
+      },
+      {
+        name: '麦考瑞夫人角', lat: -33.8567, lng: 151.2153, type: 'spot', time: '09:00',
+        desc: '拍歌剧院+海港大桥同框最佳机位。皇家植物园步行5分钟，平坦步道适合父母。',
+        budget: '免费',
+        detail: '从歌剧院步行5分钟到皇家植物园\n2月UV指数9（极高），必涂防晒霜SPF30+\n植物园有大量长椅可休息',
+        gmap: 'Mrs+Macquaries+Chair+Sydney'
+      },
+      {
+        name: '曼利海滩', lat: -33.7976, lng: 151.2884, type: 'spot', time: '12:30',
+        desc: '从环形码头乘F1渡轮30分钟。渡轮本身就是海港观光体验。比邦迪更安静平坦，适合父母。',
+        budget: '渡轮AUD$7.60（Opal日封顶$9.65）',
+        detail: 'F1渡轮约每30分钟一班\n曼利Corso步行街平坦有遮荫\n海滩有遮荫休息区\n建议提前在Transport NSW App查时刻表',
+        gmap: 'Manly+Beach+Sydney'
+      },
+      {
+        name: '岩石区 The Rocks', lat: -33.8598, lng: 151.2089, type: 'spot', time: '16:00',
+        desc: '悉尼最古老街区，特色小店和咖啡馆。步行至达令港15-20分钟。',
+        budget: '免费漫步',
+        detail: '周末有市集（2/8为周一无市集，但店铺照常营业）\n可逛悉尼博物馆（免费）\n适合傍晚漫步拍照',
+        gmap: 'The+Rocks+Sydney'
+      },
+      {
+        name: '达令港 Darling Harbour', lat: -33.8746, lng: 151.2038, type: 'spot', time: '17:30',
+        desc: '夜景优美，餐厅集中，适合一天结束时放松。步行至唐人街10分钟。',
+        budget: '免费漫步',
+        detail: '中国花园（Chinese Garden of Friendship）门票AUD$8\n海事博物馆\n达令港到唐人街步行10分钟',
+        gmap: 'Darling+Harbour+Sydney'
+      },
+      {
+        name: '皇冠海鲜酒楼 Royal Palace Seafood', lat: -33.8795, lng: 151.2046, type: 'food', time: '18:30',
+        desc: '唐人街传统粤菜，适合带父母家庭聚餐。招牌龙虾姜葱伊面、点心推车。',
+        budget: '人均AUD$40-60 / 3人约AUD$120-180',
+        detail: '地址：393-399 Sussex St, Haymarket\n三层大圆桌，适合家庭聚餐\n下午3点前有点心推车\n备选：Nick\'s Seafood（达令港海鲜）或 Pancakes on the Rocks（岩石区24h）',
+        pay: { cash: 1, card: 1, alipay: 0.5 },
+        gmap: 'Royal+Palace+Seafood+Sydney+Haymarket'
+      },
+      {
+        name: '环形码头 Circular Quay', lat: -33.8616, lng: 151.2107, type: 'transport', time: '12:00',
+        desc: '乘F1渡轮前往曼利海滩的出发点。也是歌剧院和海港大桥的步行起点。',
+        budget: 'Opal卡日封顶AUD$9.65（周日）',
+        detail: '可直接刷Visa/Mastercard/Apple Pay，无需买实体卡\n3人当天交通费最多AUD$28.95',
+        gmap: 'Circular+Quay+Sydney'
+      }
+    ]
+  },
+
+  // ── Day 2: 基督城到达 ──
+  {
+    id: 2, label: 'D2 基督城', date: '2/9 周二', title: '悉尼→基督城，取车休整', color: '#34c759',
+    locations: [
+      {
+        name: '悉尼机场 SYD', lat: -33.9399, lng: 151.1753, type: 'transport', time: '07:50',
+        desc: 'EK412 阿联酋航空A380，07:50悉尼起飞→13:05基督城到达。飞行约3小时，时差+2小时。',
+        budget: '机票约AUD$300-550/人',
+        gmap: 'Sydney+Airport+Terminal+1'
+      },
+      {
+        name: '基督城机场 CHC', lat: -43.4894, lng: 172.5322, type: 'transport', time: '13:05',
+        desc: '到达基督城。机场到达大厅对面即所有租车公司柜台。取车后开往市中心约15-20分钟。',
+        budget: '租车约NZ$70-130/天（含全险）',
+        detail: '需中国驾照+NZTA认证英文翻译件\n推荐Apex、Go Rentals（性价比高）\n右舵左行！与国内相反\n下载Google Maps离线地图',
+        gmap: 'Christchurch+Airport+New+Zealand'
+      },
+      {
+        name: '基督城植物园', lat: -43.5304, lng: 172.6271, type: 'spot', time: '16:00',
+        desc: '市区休整漫步。雅芳河泛舟、植物园、大教堂广场。轻松半日适应右舵驾驶。',
+        budget: '免费',
+        detail: '雅芳河泛舟（Punting on the Avon）约NZ$35/人\n大教堂广场（Cathedral Square）\n坎特伯雷博物馆（免费）',
+        gmap: 'Christchurch+Botanic+Gardens'
+      },
+      {
+        name: 'Riverside Market', lat: -43.5322, lng: 172.6366, type: 'food', time: '18:30',
+        desc: '基督城最新美食地标，室内市场30+摊位：海鲜、亚洲菜、烘焙、咖啡。',
+        budget: '人均NZ$20-35 / 3人约NZ$60-105',
+        detail: '地址：96 Oxford Terrace\n营业时间：每天7:00-22:00\n备选：New Regent Street彩色历史街区\n超市：New World或Countdown采购补给',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Riverside+Market+Christchurch'
+      }
+    ]
+  },
+
+  // ── Day 3: 基督城→蒂卡波湖 ──
+  {
+    id: 3, label: 'D3 蒂卡波', date: '2/10 周三', title: '基督城→蒂卡波湖（观星）', color: '#007aff',
+    locations: [
+      {
+        name: 'Fairlie Bakehouse', lat: -43.9556, lng: 170.8333, type: 'food', time: '10:00',
+        desc: '著名肉派店，蒂卡波以北25分钟。值得停车购买。新西兰最好吃的肉派之一。',
+        budget: '人均NZ$8-15',
+        detail: '地址：72 Main Street, Fairlie\n推荐：鹿肉派、猪肉派\n营业时间：每天7:00-16:00',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Fairlie+Bakehouse+Fairlie+New+Zealand'
+      },
+      {
+        name: '好牧羊人教堂', lat: -43.8814, lng: 170.5169, type: 'spot', time: '14:00',
+        desc: '1935年建造的石头教堂，窗户正对湖景和南阿尔卑斯山脉。蒂卡波标志性景点。',
+        budget: '免费参观',
+        detail: '从镇中心步行10-15分钟\n教堂旁牧羊犬雕像也是热门拍照点\n2月日落约20:45，日落后拍银河最佳\n2/10农历正月初四，月光弱，观星条件好',
+        gmap: 'Church+of+the+Good+Shepherd+Lake+Tekapo'
+      },
+      {
+        name: '蒂卡波温泉 Tekapo Springs', lat: -43.8833, lng: 170.5167, type: 'spot', time: '16:00',
+        desc: '湖畔温泉放松。三个温泉池+桑拿，适合到达后解乏。',
+        budget: '成人NZ$35/人 / 3人约NZ$105',
+        detail: '营业时间：10:00-21:00\n含温泉池、桑拿、蒸汽房\n可看湖景泡温泉',
+        gmap: 'Tekapo+Springs+Lake+Tekapo'
+      },
+      {
+        name: 'Go Tekapo 观星团', lat: -43.8800, lng: 170.5200, type: 'spot', time: '21:30',
+        desc: '⭐蒂卡波暗空保护区核心体验。中文导览，免费星空合影，性价比最高。',
+        budget: '成人NZ$99/人 / 3人NZ$297',
+        detail: '时长约90分钟\n中文导览，适合父母\n提前2周预订\n备选：Chameleon Stargazing（$109/人，营火+棉花糖）\n或 Dark Sky Project（$209/人，天文台专业望远镜）\n洞内温度低，需保暖衣物',
+        reserve: 'https://www.gotekapo.co.nz/',
+        gmap: 'Go+Tekapo+Stargazing+Lake+Tekapo'
+      },
+      {
+        name: 'Tekapo Lakefront Restaurant', lat: -43.8810, lng: 170.5180, type: 'food', time: '18:30',
+        desc: '湖景餐厅，西餐简餐，可看湖景和教堂。蒂卡波餐饮选择有限（约5-8家），建议17:30前到。',
+        budget: '主菜NZ$28-40 / 3人约NZ$90-120',
+        detail: '2月旺季需排队\n亚洲口味选择极少，建议超市买食材自做\n备选：The Brassmonkey Kea Cafe（咖啡简餐）',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Tekapo+Lakefront+Restaurant+Lake+Tekapo'
+      }
+    ]
+  },
+
+  // ── Day 4: 蒂卡波→库克山 ──
+  {
+    id: 4, label: 'D4 库克山', date: '2/11 周四', title: '蒂卡波→库克山（Hooker Valley徒步）', color: '#af52de',
+    locations: [
+      {
+        name: '库克山村 Mount Cook Village', lat: -43.7356, lng: 170.0956, type: 'hotel', time: '10:00',
+        desc: '入住Hermitage Hotel，正对库克山。村内唯一大型酒店，需提前6个月预订。',
+        budget: 'NZ$350-600/晚',
+        detail: '海拔765m，住宿极少，全年旺季\n备选：Aoraki Court Motel（NZ$280-400，独立厨房）\n村内无超市无加油站！\n在蒂卡波或Twizel采购食物饮水\n最近加油站在Twizel（南40分钟）',
+        gmap: 'Hermitage+Hotel+Mount+Cook+Village'
+      },
+      {
+        name: 'Hooker Valley Track', lat: -43.7333, lng: 170.1000, type: 'spot', time: '11:00',
+        desc: '⭐库克山最适合家庭的步道。10km往返，3-4小时，平缓（爬升仅150m）。三座吊桥+冰川湖。',
+        budget: '免费',
+        detail: '起点：White Horse Hill停车场\n三座吊桥：第一座(2km)、第二座(3.5km)、第三座(4.5km)\n终点：胡克湖冰川浮冰，正对库克山(3,724m)\n带2升水、防晒、防风外套（山区天气多变）\n山谷中无手机信号\n备选短步道：Tasman Glacier View（30min往返）\n出发前查DOC官网步道状态 doc.govt.nz',
+        gmap: 'Hooker+Valley+Track+Mount+Cook'
+      },
+      {
+        name: 'Hermitage Panorama Room', lat: -43.7356, lng: 170.0956, type: 'food', time: '18:00',
+        desc: '全景落地窗正对库克山。村内唯一正餐餐厅，建议预约。',
+        budget: '主菜NZ$35-55 / 3人约NZ$130-200',
+        detail: '晚餐17:30-21:00，建议预约\n备选：The Cafe（自助+点餐，NZ$20-30/人）\n或 The Bar（酒吧轻食，人均NZ$20-35）\n自助晚餐NZ$65-75/人含甜点',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Hermitage+Hotel+Restaurant+Mount+Cook'
+      }
+    ]
+  },
+
+  // ── Day 5: 库克山→瓦纳卡 ──
+  {
+    id: 5, label: 'D5 瓦纳卡', date: '2/12 周五', title: '库克山→瓦纳卡（那棵树+湖畔）', color: '#ff2d55',
+    locations: [
+      {
+        name: 'That Wānaka Tree', lat: -44.6950, lng: 169.1350, type: 'spot', time: '11:30',
+        desc: '⭐湖中孤独的柳树，新西兰最知名拍照点之一。从镇中心沿湖步行5-10分钟。',
+        budget: '免费',
+        detail: '最佳拍照时间：清晨(6:30-8:00无风水面如镜)或下午3-4点(侧光)\n2月日落约20:45，可傍晚再去拍一次',
+        gmap: 'That+Wanaka+Tree+Wanaka'
+      },
+      {
+        name: 'Mt Iron Loop Track', lat: -44.6833, lng: 169.1500, type: 'spot', time: '14:00',
+        desc: '3.5km，1.5小时，容易。全景瓦纳卡湖。适合父母的轻松步道，替代Roy\'s Peak。',
+        budget: '免费',
+        detail: 'Roy\'s Peak（1,250m爬升，5-7h）对父母太累，不建议\n如女儿想挑战可早上7点单独出发\nMt Iron Loop是最佳家庭替代',
+        gmap: 'Mt+Iron+Loop+Track+Wanaka'
+      },
+      {
+        name: 'Francesca\'s Italian Kitchen', lat: -44.7000, lng: 169.1400, type: 'food', time: '18:00',
+        desc: '瓦纳卡最受欢迎的意大利餐厅，披萨意面，适合家庭。',
+        budget: '主菜NZ$28-42 / 3人约NZ$90-135',
+        detail: '备选：\nBig FIG Wanaka（中东风味简餐，人均NZ$20-35）\nWanaka Thai（泰国菜，适合亚洲口味，主菜NZ$25-35）\n镇中心有New World超市',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Francescas+Italian+Kitchen+Wanaka'
+      }
+    ]
+  },
+
+  // ── Day 6: 瓦纳卡→皇后镇→蒂阿瑙 ──
+  {
+    id: 6, label: 'D6 蒂阿瑙', date: '2/13 周六', title: '瓦纳卡→皇后镇→蒂阿瑙', color: '#ff9500',
+    locations: [
+      {
+        name: '皇后镇天空缆车 Skyline Gondola', lat: -45.8200, lng: 168.6600, type: 'spot', time: '10:00',
+        desc: '南半球最陡缆车，8分钟到Bob\'s Peak(790m)。全景皇后镇、瓦卡蒂普湖、卓越山脉。+Luge滑板车3圈。',
+        budget: '缆车+3圈Luge 成人NZ$78 / 3人约NZ$234',
+        detail: '缆车运营时间：9:00-21:00（夏季）\nLuge：第一次必须走初级赛道，之后可选高级赛道\n50多岁父母也能轻松参与Luge，很安全\n也可徒步上Bob\'s Peak（Tiki Trail，免费，约1h）然后缆车下来',
+        reserve: 'https://www.skyline.co.nz/queenstown/',
+        gmap: 'Skyline+Gondola+Queenstown'
+      },
+      {
+        name: 'Fergburger', lat: -45.8210, lng: 168.6580, type: 'food', time: '12:00',
+        desc: '⭐皇后镇必打卡！巨大gourmet汉堡，全天营业。排队20-40分钟，建议APP提前下单。',
+        budget: 'NZ$14-24/个 / 3人约NZ$50-70',
+        detail: '经典推荐：Big Al（牛肉）、Holsum（鸡肉）、Sweet Bambi（鹿肉）\n隔壁Mrs Ferg Gelato冰淇淋也值得一试\nAPP提前下单避免排队',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Fergburger+Queenstown'
+      },
+      {
+        name: '蒂阿瑙 Te Anau', lat: -45.4147, lng: 167.7142, type: 'hotel', time: '17:30',
+        desc: '住2晚。湖畔住宿，步行到RealNZ游客中心（峡湾游船和萤火虫洞出发地）。',
+        budget: '汽车旅馆NZ$200-300/晚（住2晚）',
+        detail: ' FreshChoice Te Anau超市采购明日峡湾午餐（路上无餐厅！）\n建议买面包、水果、水、零食\n Miles Better Pies著名肉派店NZ$6-9，可买几个当明日午餐',
+        gmap: 'Te+Anau+New+Zealand'
+      },
+      {
+        name: 'The Mossburn Tavern', lat: -45.4160, lng: 167.7160, type: 'food', time: '18:30',
+        desc: '蒂阿瑙当地酒馆，牛羊肉，适合一天驾车后放松。',
+        budget: '主菜NZ$25-38 / 3人约NZ$75-115',
+        detail: '备选：Cafe Il Corallo（意大利简餐，人均NZ$20-30）',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Mossburn+Tavern+Te+Anau'
+      }
+    ]
+  },
+
+  // ── Day 7: 米尔福德峡湾 ──
+  {
+    id: 7, label: 'D7 峡湾', date: '2/14 周日', title: '⭐米尔福德峡湾一日游', color: '#007aff',
+    locations: [
+      {
+        name: 'RealNZ游客中心（出发地）', lat: -45.4150, lng: 167.7150, type: 'transport', time: '07:30',
+        desc: '蒂阿瑙出发，大巴+游船套餐。大巴全景天窗+导游讲解。约8小时总行程。',
+        budget: '大巴+游船 3人NZ$585-630',
+        detail: '地址：85 Lakefront Drive, Te Anau\n提前20分钟到游客中心报到\n推荐运营商：Southern Discoveries（$179/人，最老牌性价比高）\n备选：Mitre Peak Cruises（$169/人，最小船拍照好）\n务必提前1-3个月预订！',
+        reserve: 'https://www.realnz.com/',
+        gmap: 'RealNZ+Visitor+Centre+Te+Anau'
+      },
+      {
+        name: 'Mirror Lakes', lat: -44.6333, lng: 167.8500, type: 'spot', time: '08:30',
+        desc: '大巴沿途停靠。湖面倒映厄尔灵顿山谷，如镜面般反射雪山。快速拍照点。',
+        budget: '含在套餐内',
+        gmap: 'Mirror+Lakes+Fiordland'
+      },
+      {
+        name: 'Homer Tunnel', lat: -44.7333, lng: 167.7500, type: 'transport', time: '09:30',
+        desc: '单行交替隧道，大巴排队等待。穿越后进入米尔福德峡湾区域。',
+        budget: '含在套餐内',
+        detail: '隧道长1.2km，海拔945m\n单行交替，需等红绿灯\n隧道内无灯，大巴有车灯',
+        gmap: 'Homer+Tunnel+Fiordland'
+      },
+      {
+        name: '米尔福德峡湾游船', lat: -44.6717, lng: 167.9256, type: 'spot', time: '10:00',
+        desc: '⭐世界第八大奇迹。1h45min-2h游船。瀑布、海豹、企鹅（幸运的话）。.',
+        budget: '含在大巴+游船套餐内',
+        detail: '推荐Southern Discoveries（1h45min，75人，$179/人）\n游船有室内外座位，甲板拍照\n雨天瀑布壮观但能见度低——游船风雨无阻\n雨天可选Pure Milford玻璃顶船（$276/人）\n运气好可见海豚、企鹅、海豹',
+        gmap: 'Milford+Sound+Cruise+Terminal'
+      },
+      {
+        name: 'Eglinton Valley', lat: -44.9500, lng: 167.9000, type: 'spot', time: '14:00',
+        desc: '大巴返回途中停靠。宽阔冰川山谷，远景雪山。新西兰经典风光。',
+        budget: '含在套餐内',
+        gmap: 'Eglinton+Valley+Fiordland'
+      }
+    ]
+  },
+
+  // ── Day 8: 萤火虫洞→但尼丁 ──
+  {
+    id: 8, label: 'D8 但尼丁', date: '2/15 周一', title: '萤火虫洞→但尼丁', color: '#af52de',
+    locations: [
+      {
+        name: '蒂阿瑙萤火虫洞', lat: -45.4150, lng: 167.7150, type: 'spot', time: '09:00',
+        desc: '⭐乘船穿越蒂阿瑙湖→步行至洞穴→乘小舟看萤火虫。2h15min。唯一运营商RealNZ。',
+        budget: '成人NZ$145/人 / 3人NZ$435',
+        detail: '出发地点：RealNZ Visitor Centre, 85 Lakefront Drive, Te Anau\n行程：乘船穿湖(20min)→步行动导览洞穴→乘小舟漂流地下河看萤火虫→返回\n洞内温度8-12°C！必带保暖外套！\n洞内禁止拍照（闪光灯影响萤火虫）\n道路湿滑穿防滑鞋\n提前20分钟报到\n提前2-4周预订',
+        reserve: 'https://www.realnz.com/en/experiences/te-anau-glowworm-caves/',
+        gmap: 'Te+Anau+Glowworm+Caves'
+      },
+      {
+        name: '但尼丁火车站', lat: -45.8789, lng: 170.5028, type: 'spot', time: '16:30',
+        desc: '新西兰最美火车站。彩绘瓷砖和皇家阶梯。免费参观。从八角广场步行5分钟。',
+        budget: '免费',
+        detail: '但尼丁是南岛第二大城市（12万人）\n距蒂阿瑙约5h/370km——全程最长车程，建议早出发\n八角广场（The Octagon）周边餐饮集中',
+        gmap: 'Dunedin+Railway+Station'
+      },
+      {
+        name: '鲍德温街 Baldwin Street', lat: -45.8583, lng: 170.5333, type: 'spot', time: '17:00',
+        desc: '吉尼斯世界纪录认证世界最陡街道，最陡处坡度35%（19度）。可开车上去。',
+        budget: '免费',
+        detail: '从底部往上拍最能体现坡度\n50多岁父母可慢慢走，也可开车上去（注意安全）\n游览约20-30分钟',
+        gmap: 'Baldwin+Street+Dunedin'
+      },
+      {
+        name: '第一教堂 First Church of Otago', lat: -45.8750, lng: 170.5036, type: 'spot', time: '17:30',
+        desc: '但尼丁最古老教堂（1873年），新哥特式建筑，56米尖塔是城市地标。免费参观。',
+        budget: '免费（建议捐赠）',
+        detail: '精美彩绘玻璃窗、木制拱顶\n开放时间：通常10:00-16:00\n从八角广场步行约5分钟',
+        gmap: 'First+Church+of+Otago+Dunedin'
+      },
+      {
+        name: "Speight's Ale House", lat: -45.8800, lng: 170.5050, type: 'food', time: '18:30',
+        desc: '但尼丁经典啤酒屋，苏格兰风格。鱼薯牛排，适合一天驾车后放松。',
+        budget: '主菜NZ$25-38 / 3人约NZ$90-120',
+        detail: '八角广场附近\n备选：\nPaasha Turkish Restaurant（土耳其菜，适合亚洲口味）\nEtrusco at the Savoy（意大利餐厅）\nThe Bog（苏格兰风格酒馆）',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Speights+Ale+House+Dunedin'
+      }
+    ]
+  },
+
+  // ── Day 9: 但尼丁→基督城 ──
+  {
+    id: 9, label: 'D9 回程', date: '2/16 周二', title: '但尼丁→基督城（还车）', color: '#34c759',
+    locations: [
+      {
+        name: '但尼丁八角广场 The Octagon', lat: -45.8778, lng: 170.5036, type: 'spot', time: '08:00',
+        desc: '城市中心，周边餐饮集中。早上漫步+早餐。',
+        budget: '免费',
+        gmap: 'The+Octagon+Dunedin'
+      },
+      {
+        name: '基督城机场（还车）', lat: -43.4894, lng: 172.5322, type: 'transport', time: '15:00',
+        desc: '但尼丁→基督城约5h/360km，经SH1北行。途中经Oamaru镇可午餐。机场还车。',
+        budget: '油费约NZ$60-80',
+        detail: '全程约2,000km总里程\n9天租车总费用约NZ$600-1,200\n建议在Oamaru镇午餐休息\nOamaru有维多利亚街区和小蓝企鹅（如有时间可停留）',
+        gmap: 'Christchurch+Airport+Rental+Car+Return'
+      },
+      {
+        name: 'New Regent Street', lat: -43.5280, lng: 172.6370, type: 'food', time: '18:30',
+        desc: '基督城彩色历史街区，多家餐厅酒吧。最后一晚轻松晚餐。',
+        budget: '人均NZ$30-45 / 3人约NZ$90-135',
+        detail: '备选：Victoria Street（更多餐厅选择）\n建议住机场附近，方便次日早班机',
+        pay: { cash: 1, card: 1 },
+        gmap: 'New+Regent+Street+Christchurch'
+      }
+    ]
+  },
+
+  // ── Day 10: 基督城→上海 ──
+  {
+    id: 10, label: 'D10 返沪', date: '2/17 周三', title: '基督城→上海', color: '#86868b',
+    locations: [
+      {
+        name: '基督城机场 CHC', lat: -43.4894, lng: 172.5322, type: 'transport', time: '10:50',
+        desc: 'SQ298 新加坡航空波音787。基督城10:50→新加坡17:40（约10h50min）。转机2-3h后飞上海。',
+        budget: '机票约¥3,800-6,500/人（含在开口程中）',
+        detail: '全程新航一张票，行李直挂上海\n新加坡转机可在樟宜机场休息购物\n到达上海约2/18凌晨01:30\n建议提前3小时到机场办理退税（如有）',
+        gmap: 'Christchurch+Airport+International'
+      },
+      {
+        name: '上海浦东机场 PVG', lat: 31.1443, lng: 121.8083, type: 'transport', time: '01:30+1',
+        desc: '到达上海浦东。行程结束！',
+        budget: '—',
+        gmap: 'Shanghai+Pudong+Airport+Terminal+2'
+      }
+    ]
+  }
+];
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  Overview tab content                                       ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function overviewContent() {
+  return `
+<div class="hero"><h1>悉尼+新西兰南岛行程</h1><p class="subtitle">2027年2月7日 — 2月17日 · 3人自驾 · 11天</p></div>
+<div class="info-grid">
+  <div class="info-card"><div class="label">出行人</div><div class="value">20岁女儿 + 50多岁父母</div></div>
+  <div class="info-card"><div class="label">交通方式</div><div class="value">悉尼步行+渡轮 / 南岛自驾</div></div>
+  <div class="info-card"><div class="label">航班</div><div class="value">新航开口程 + 跨塔斯曼海</div></div>
+  <div class="info-card"><div class="label">预估总费用</div><div class="value">3人约 ¥4.6-7.2万</div></div>
+</div>
+<div class="section-head">行程概览</div>
+<div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
+<div class="section-head">支付提醒</div>
+<div class="pay-summary">
+  <h4>💰 新西兰</h4>
+  信用卡（Visa/Mastercard）通用。<span class="ok-text">部分餐厅支持支付宝</span>。建议备少量NZD现金（NZ$200-300）用于小额消费。<br>
+  租车加油多为自助刷卡。自助加油先插卡→选金额→加油→打印收据。
+</div>
+<div class="pay-summary">
+  <h4>🇦🇺 澳大利亚</h4>
+  可直接刷银行卡/手机支付乘公交（Opal卡非必需）。周日Opal日封顶AUD$9.65/人。<br>
+  <span class="warn">⚠️ 2月UV指数9（极高），必涂防晒霜SPF30+、戴帽子和太阳镜。</span>
+</div>
+<div class="pay-summary">
+  <h4>🚗 自驾关键提醒</h4>
+  <strong>右舵左行！</strong>与国内相反。<br>
+  Te Anau到Milford Sound 118km<span class="warn">无加油站</span>——Te Anau加满！<br>
+  库克山村无加油站——Twizel加满！<br>
+  南岛多路段无手机信号——提前下载Google Maps离线地图。<br>
+  中国驾照需NZTA认证英文翻译件（租租车可在线办理）。
+</div>
+<div class="section-head">预订优先级</div>
+<div class="pay-summary">
+  <h4>📅 按紧俏程度排序</h4>
+  1. 国际机票（新航开口程）— <span class="warn">提前6-9个月</span><br>
+  2. 蒂卡波湖住宿 — <span class="warn">提前6个月</span><br>
+  3. 库克山Hermitage酒店 — <span class="warn">提前6个月</span><br>
+  4. 悉尼→基督城航班 — 提前3个月<br>
+  5. 米尔福德峡湾游船 — 提前1-3个月<br>
+  6. 租车+驾照翻译件 — 提前2-4周<br>
+  7. 蒂阿瑙萤火虫洞 — 提前2-4周<br>
+  8. 蒂卡波观星团 — 提前2周<br>
+  9. 皇后镇缆车+Luge — 可现场买
+</div>
+<div class="section-head">图例</div>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-red)"></div>餐厅</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-blue)"></div>景点</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-purple)"></div>活动</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-orange)"></div>酒店</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--text-tertiary)"></div>交通</div>
+</div>`;
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  ENGINE — Do not modify below unless customizing behavior   ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const map = L.map('map', { center: [HOTEL.lat || -43.5, HOTEL.lng || 172.6], zoom: 6, zoomControl: false, attributionControl: true });
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+
+/* ── Geolocation ── */
+const LocateControl = L.Control.extend({
+  options: { position: 'bottomright' },
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'locate-btn');
+    btn.innerHTML = '📍';
+    btn.title = '我的位置';
+    L.DomEvent.disableClickPropagation(btn);
+    btn.addEventListener('click', () => {
+      btn.classList.add('active');
+      map.locate({ setView: true, maxZoom: 15 });
+    });
+    this._btn = btn;
+    return btn;
+  }
+});
+new LocateControl().addTo(map);
+let locMarker, locCircle;
+map.on('locationfound', e => {
+  const r = e.accuracy / 2;
+  if (locMarker) { locMarker.setLatLng(e.latlng); locCircle.setLatLng(e.latlng).setRadius(r); }
+  else {
+    locMarker = L.marker(e.latlng, {
+      icon: L.divIcon({ className:'', html:'<div style="width:14px;height:14px;border-radius:50%;background:#007aff;border:2.5px solid #fff;box-shadow:0 0 6px rgba(0,122,255,.5)"></div><div class="loc-pulse" style="position:absolute;top:0;left:0"></div>', iconSize:[14,14], iconAnchor:[7,7] }),
+      zIndexOffset: 2000
+    }).addTo(map);
+    locCircle = L.circle(e.latlng, { radius: r, color: '#007aff', fillColor: '#007aff', fillOpacity: .08, weight: 1 }).addTo(map);
+  }
+});
+map.on('locationerror', () => {});
+
+function icon(color, emoji) {
+  return L.divIcon({ className: '', html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.18)">${emoji||''}</div>`, iconSize: [28,28], iconAnchor: [14,14], popupAnchor: [0,-16] });
+}
+
+if (HOTEL.lat) L.marker([HOTEL.lat, HOTEL.lng], { icon: icon('#ff9500','🏨'), zIndexOffset: 1000 }).addTo(map).bindPopup(`<b>${HOTEL.name}</b>`);
+
+let markers = [], polylines = [];
+const emojis = { food:'🍽️', spot:'📍', hotel:'🏨', transport:'🚃', drink:'🍺' };
+
+function clearMap() { markers.forEach(m=>map.removeLayer(m)); polylines.forEach(p=>map.removeLayer(p)); markers=[]; polylines=[]; }
+
+function showDay(idx) {
+  clearMap();
+  if (idx === 0) {
+    const pts = [];
+    DAYS.forEach(d => d.locations.forEach(l => { if(l.lat) pts.push([l.lat,l.lng]); }));
+    if(pts.length) map.fitBounds(pts, {padding:[30,30]});
+    DAYS.slice(1).forEach(d => {
+      d.locations.filter(l=>l.time!=='—').forEach(l => {
+        const m = L.circleMarker([l.lat,l.lng], { radius:4, fillColor:d.color, color:'#fff', weight:1.5, fillOpacity:.9 }).addTo(map).bindPopup(`<b>${l.name}</b><br><span style="color:#86868b">${d.label}</span>`);
+        markers.push(m);
+      });
+    });
+    return;
+  }
+  const day = DAYS.find(d=>d.id===idx);
+  if(!day) return;
+  const coords = [];
+  day.locations.forEach(l => {
+    if(!l.lat) return;
+    const m = L.marker([l.lat,l.lng], { icon: icon(day.color, emojis[l.type]||'📌') }).addTo(map);
+    const gmapQ = l.gmap||encodeURIComponent(l.name);
+    m.bindPopup(`<b>${l.name}</b>${l.time!=='—'?'<br><span style="color:#86868b">'+l.time+'</span>':''}<br>${l.desc}${l.budget?'<br><span style="color:#ff9500">'+l.budget+'</span>':''}<br><a href="#" onclick="event.preventDefault();openAS('${l.name.replace(/'/g,"\\'")}',${l.lat},${l.lng},'${gmapQ}')">📍 导航</a>`);
+    markers.push(m);
+    if(l.time!=='—') coords.push([l.lat,l.lng]);
+  });
+  if(coords.length>1) { const pl = L.polyline(coords, { color:day.color, weight:2.5, opacity:.5, dashArray:'6,5' }).addTo(map); polylines.push(pl); }
+  if(coords.length) map.fitBounds(coords, { padding:[40,40], maxZoom:14 });
+}
+
+// ══════════ RENDER ══════════
+function payChips(pay) {
+  if(!pay) return '';
+  let h = '<div class="pays">';
+  const m = { cash:'💴', card:'💳', alipay:'支付宝', wechat:'微信' };
+  for(const [k,label] of Object.entries(m)) {
+    if(pay[k]!==undefined) { const c = pay[k]===1?'ok':pay[k]===0.5?'idk':'no'; h += `<span class="pay ${c}">${label}</span>`; }
+  }
+  return h+'</div>';
+}
+
+const IN_APP_WEBVIEW = (() => {
+  const ua = (navigator.userAgent || '').toLowerCase();
+  return /micromessenger|xhs|xhsdiscover|discover\/|tiktok|aweme|weibo|qq\/|qqbrowser|alipayclient|dingtalk|lark|feishu|ucbrowser|baiduboxapp|toutiao|newsarticle/.test(ua);
+})();
+
+window._extLocs = {};
+DAYS.forEach(d => d.locations.forEach(l => { window._extLocs[`${d.id}::${l.name}`] = l; }));
+
+function locCard(loc, dayIdx) {
+  const dot = loc.type==='food'?'food':loc.type==='spot'?'spot':loc.type==='drink'?'drink':loc.type==='hotel'?'hotel':'transport';
+  const bdg = loc.type==='food'?'<span class="badge food">餐</span>':loc.type==='spot'?'<span class="badge spot">景</span>':loc.type==='drink'?'<span class="badge drink">饮</span>':'';
+  const uid = `d${dayIdx}-${loc.name.replace(/\W/g,'')}`;
+  const gmapQ = loc.gmap||encodeURIComponent(loc.name);
+  let lnk = `<button class="btn nav" onclick="openAS('${loc.name.replace(/'/g,"\\'")}',${loc.lat},${loc.lng},'${gmapQ}')">📍 导航</button>`;
+  if(loc.reserve) lnk += `<a href="${loc.reserve}" target="_blank" class="btn rsv">📅 预约</a>`;
+  return `<div class="tl-item"><div class="tl-dot ${dot}"></div><div class="card" onclick="if(!event.target.closest('.btn,.links'))toggle('${uid}')"><div class="time">${loc.time!=='—'?loc.time:'备选'}</div><div class="name">${bdg} ${loc.name}</div><div class="desc">${loc.desc}</div>${loc.budget?'<div class="budget">'+loc.budget+'</div>':''}${payChips(loc.pay)}<div class="links">${lnk}</div>${loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,'<br>')+'</div>':''}</div></div>`;
+}
+
+function renderDay(idx) {
+  const d = DAYS.find(x=>x.id===idx); if(!d) return '';
+  const main = d.locations.filter(l=>l.time!=='—');
+  const alt = d.locations.filter(l=>l.time==='—');
+  let h = `<div class="day-head"><h2>${d.title}</h2><p>${d.date}</p></div>`;
+  if(main.length) { h += '<div class="section-head">行程</div><div class="timeline">'; main.forEach(l => h += locCard(l, idx)); h += '</div>'; }
+  if(alt.length) { h += '<div class="section-head">备选</div><div class="timeline">'; alt.forEach(l => h += locCard(l, idx)); h += '</div>'; }
+  return h;
+}
+
+// ══════════ NAV ══════════
+let cur = 0;
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+
+DAYS.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (d.id===0?' active':'');
+  btn.dataset.day = d.id;
+  btn.textContent = d.label;
+  tabsEl.appendChild(btn);
+});
+
+function go(idx) {
+  cur = idx;
+  tabsEl.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', +t.dataset.day===idx));
+  contentEl.innerHTML = idx===0 ? overviewContent() : renderDay(idx);
+  showDay(idx);
+  contentEl.scrollTo({top:0});
+  const tab = tabsEl.querySelector(`[data-day="${idx}"]`);
+  if(tab) tab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+}
+
+function toggle(id) { const el=document.getElementById(id); if(el) el.classList.toggle('closed'); }
+
+tabsEl.addEventListener('click', e => { const t=e.target.closest('.tab'); if(t) go(+t.dataset.day); });
+
+go(0);
+
+/* ── Action Sheet for Navigation ── */
+const asOverlay = document.createElement('div');
+asOverlay.className = 'as-overlay';
+asOverlay.innerHTML = `<div class="as-sheet">
+  <div class="as-group" id="as-opts"></div>
+  <div class="as-group"><button class="as-item as-cancel" onclick="closeAS()">取消</button></div>
+</div>`;
+document.body.appendChild(asOverlay);
+asOverlay.addEventListener('click', e => { if (e.target === asOverlay) closeAS(); });
+
+function openAS(name, lat, lng, gmap) {
+  const q = gmap || encodeURIComponent(name);
+  const encName = encodeURIComponent(name);
+  const appleUrl = `https://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}&name=${encName}`;
+  const googleUrl = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  document.getElementById('as-opts').innerHTML =
+    `<button class="as-item" onclick="window.open('${appleUrl}');closeAS()">🍎 Apple Maps</button>` +
+    `<button class="as-item" onclick="window.open('${googleUrl}');closeAS()">🗺️ Google Maps</button>`;
+  asOverlay.classList.add('show');
+}
+function closeAS() { asOverlay.classList.remove('show'); }
+</script>
+</body>
+</html>
