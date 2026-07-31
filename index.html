@@ -237,64 +237,96 @@ a:hover { text-decoration: underline; }
 // ║  Trip Data — 悉尼+新西兰南岛 2027.2.7-2.17                  ║
 // ╚══════════════════════════════════════════════════════════════╝
 
-const HOTEL = { name: '行程起点', lat: -33.8688, lng: 151.2093 };
+const HOTEL = { name: '曼特拉2酒店 Mantra 2 Bond Street', lat: -33.8645, lng: 151.2076 };
 
 const DAYS = [
   { id: 0, label: '总览', color: '#0071e3', locations: [] },
 
   // ── Day 1: 悉尼 ──
   {
-    id: 1, label: 'D1 悉尼', date: '2/8 周一', title: '悉尼一日游', color: '#ff9500',
+    id: 1, label: 'D1 悉尼', date: '2/8 周日', title: '悉尼一日游（动物园+歌剧院+日落）', color: '#ff9500',
     locations: [
       {
-        name: '悉尼歌剧院', lat: -33.8568, lng: 151.2153, type: 'spot', time: '10:00',
-        desc: '世界文化遗产，外观拍照免费。中文导览AUD$48/人，需上下300级台阶，父母酌情。',
-        budget: '免费参观 / 导览AUD$48',
-        detail: '周一中文导览场次：9:30、11:00、13:00、14:30\n建议提前在官网 sydneyoperahouse.com 预约\n外部拍照最佳角度在麦考瑞夫人角',
-        gmap: 'Sydney+Opera+House+Sydney'
+        name: '曼特拉2酒店 Mantra 2 Bond Street', lat: -33.8645, lng: 151.2076, type: 'hotel', time: '08:30',
+        desc: '下飞机后先到酒店寄存行李。2 Bond Street，CBD核心区，步行到环形码头8分钟。入住14:00，可提前寄存。',
+        budget: '—',
+        detail: '机场→酒店：机场快线火车到Wynyard站(13min)+步行5min约AUD$18.6/人\n或Uber约AUD$60-80（3人+行李推荐）\n退房11:00，入住14:00',
+        gmap: 'Mantra+2+Bond+Street+Sydney'
       },
       {
-        name: '麦考瑞夫人角', lat: -33.8567, lng: 151.2153, type: 'spot', time: '09:00',
-        desc: '拍歌剧院+海港大桥同框最佳机位。皇家植物园步行5分钟，平坦步道适合父母。',
+        name: '环形码头 Circular Quay', lat: -33.8616, lng: 151.2107, type: 'transport', time: '09:15',
+        desc: '从酒店步行8分钟到Wharf 6，乘轮渡去塔龙加动物园。12分钟渡轮。',
+        budget: '轮渡约AUD$7.6/人',
+        detail: '可直接刷Visa/Mastercard/Apple Pay，无需买Opal卡\nOpal周日日封顶$9.65/人\n轮渡约每20-30分钟一班',
+        gmap: 'Circular+Quay+Wharf+6+Sydney'
+      },
+      {
+        name: '塔龙加动物园 Taronga Zoo', lat: -33.8419, lng: 151.2394, type: 'spot', time: '09:30',
+        desc: '⭐悉尼最著名动物园。考拉、袋鼠、海豹表演。面朝悉尼海港，动物园本身也是观景台。',
+        budget: '网上票AUD$51.3/人（门口$57）/ 3人约AUD$154\n含轮渡套票AUD$79/人',
+        detail: '开放时间：9:30-16:30（最后入场15:30）\n建议网上购票便宜10%\n建议游玩3-4小时\n海豹表演通常11:00和14:00\n入园后先坐缆车到山顶，从上往下逛\n返程轮渡从Taronga Zoo Wharf乘船回环形码头',
+        reserve: 'https://www.taronga.org.au/taronga-zoo',
+        gmap: 'Taronga+Zoo+Sydney'
+      },
+      {
+        name: 'Whalebridge 法式海鲜餐厅', lat: -33.8640, lng: 151.2120, type: 'food', time: '13:15',
+        desc: '⭐谷歌4.9分。环形码头东侧法式海鲜小酒馆，海港露天座。轮渡返回后步行2分钟。',
+        budget: '人均AUD$80-130 / 3人约AUD$240-390',
+        detail: '地址：8-10 East Circular Quay\n法式海鲜，生蚝、龙虾、海鲜拼盘\n海港景观露天座位\n备选：\nBouillon L\'Entrecôte（法式牛排4.9★，人均$50-80，6 Loftus St）\nGrana（意大利手工面4.5★，人均$60-100，5-7 Young St）',
+        pay: { cash: 1, card: 1, alipay: 0.5 },
+        gmap: 'Whalebridge+Sydney'
+      },
+      {
+        name: '悉尼歌剧院中文导览', lat: -33.8568, lng: 151.2153, type: 'spot', time: '14:30',
+        desc: '⭐1小时中文讲解导览。参观歌剧院内部主要演出厅，了解建筑历史和幕后故事。',
+        budget: 'AUD$48/人 / 3人AUD$144',
+        detail: '周日场次：9:30、11:00、13:00、14:30\n推荐选14:30场（15:00导览开始，16:00结束，衔接日落）\n提前15分钟到下层大厅(Lower Concourse)Welcome Centre办理手续\n乘扶梯到门厅层9号出发点集合\n⚠️全程步行2.5km+上下300级台阶+全程站立1h，无电梯\n父母酌情参加，可只外观拍照\n严禁录影，允许拍照\n预约：sydneyoperahouse.com/tours/mandarin-tour\n提前2-4周预订',
+        reserve: 'https://www.sydneyoperahouse.com/tours/mandarin-tour',
+        gmap: 'Sydney+Opera+House+Welcome+Centre'
+      },
+      {
+        name: 'Opera Bar 日落小酌', lat: -33.8560, lng: 151.2155, type: 'drink', time: '16:00',
+        desc: '歌剧院下方露天酒吧。导览结束后休息，边喝边看海港。也可在此等日落。',
+        budget: '人均AUD$30-50',
+        detail: '歌剧院Lower Concourse\n露天座位面朝海港大桥\n可点饮品和小食\n不正式用餐，适合休息等候',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Opera+Bar+Sydney'
+      },
+      {
+        name: '🌅 麦考瑞夫人座椅 Mrs Macquaries Chair', lat: -33.8567, lng: 151.2233, type: 'spot', time: '17:00',
+        desc: '⭐悉尼最佳日落观赏点！面西，可同时拍到歌剧院+海港大桥+日落同框。2月8日日落19:54。',
         budget: '免费',
-        detail: '从歌剧院步行5分钟到皇家植物园\n2月UV指数9（极高），必涂防晒霜SPF30+\n植物园有大量长椅可休息',
+        detail: '从歌剧院沿海滨步道步行20-25分钟（约1.5km）\n途经植物园东岸步道，风景优美\n建议18:30前到达占位\n日落19:54，日落后15-20分钟"魔幻时刻"天空最美\n带防蚊液（2月傍晚有蚊虫）\n从座椅可拍到经典明信片角度：歌剧院+大桥+落日',
         gmap: 'Mrs+Macquaries+Chair+Sydney'
       },
       {
-        name: '曼利海滩', lat: -33.7976, lng: 151.2884, type: 'spot', time: '12:30',
-        desc: '从环形码头乘F1渡轮30分钟。渡轮本身就是海港观光体验。比邦迪更安静平坦，适合父母。',
-        budget: '渡轮AUD$7.60（Opal日封顶$9.65）',
-        detail: 'F1渡轮约每30分钟一班\n曼利Corso步行街平坦有遮荫\n海滩有遮荫休息区\n建议提前在Transport NSW App查时刻表',
-        gmap: 'Manly+Beach+Sydney'
+        name: '皇家植物园 Royal Botanic Garden', lat: -33.8642, lng: 151.2167, type: 'spot', time: '19:30',
+        desc: '日落后穿越植物园回市区。夜晚步道有灯光，约15分钟穿过。7:00-日落开放（约19:30）。',
+        budget: '免费',
+        detail: '开放时间：7:00-日落（约19:30）\n从麦考瑞夫人座椅向西北穿越植物园\n约15分钟步行\n注意：日落闭园，需在19:30前通过\n如已闭园可沿Mrs Macquaries Road绕行',
+        gmap: 'Royal+Botanic+Garden+Sydney'
       },
       {
-        name: '岩石区 The Rocks', lat: -33.8598, lng: 151.2089, type: 'spot', time: '16:00',
-        desc: '悉尼最古老街区，特色小店和咖啡馆。步行至达令港15-20分钟。',
-        budget: '免费漫步',
-        detail: '周末有市集（2/8为周一无市集，但店铺照常营业）\n可逛悉尼博物馆（免费）\n适合傍晚漫步拍照',
-        gmap: 'The+Rocks+Sydney'
+        name: '圣玛丽大教堂 St Mary\'s Cathedral', lat: -33.8708, lng: 151.2131, type: 'spot', time: '20:00',
+        desc: '澳大利亚最大教堂之一，新哥特式建筑。晚间亮灯很美。位于海德公园北侧。',
+        budget: '免费',
+        detail: '周日开放时间：6:30-19:00\n到时可能已关门，外观拍照即可\n晚间亮灯很美\n从植物园步行10-15分钟\n位于College Street旁',
+        gmap: 'St+Marys+Cathedral+Sydney'
       },
       {
-        name: '达令港 Darling Harbour', lat: -33.8746, lng: 151.2038, type: 'spot', time: '17:30',
-        desc: '夜景优美，餐厅集中，适合一天结束时放松。步行至唐人街10分钟。',
-        budget: '免费漫步',
-        detail: '中国花园（Chinese Garden of Friendship）门票AUD$8\n海事博物馆\n达令港到唐人街步行10分钟',
-        gmap: 'Darling+Harbour+Sydney'
+        name: '海德公园 Hyde Park', lat: -33.8715, lng: 151.2133, type: 'spot', time: '20:15',
+        desc: '澳大利亚最古老的城市公园。阿奇博尔德喷泉夜景，林荫步道适合散步。',
+        budget: '免费',
+        detail: '从圣玛丽大教堂步行1-2分钟\n阿奇博尔德喷泉（Archibald Fountain）\n林荫大树遮蔽的步道\n夜晚有灯光照明，氛围浪漫\n公园周边有很多餐厅\n回酒店步行约10分钟',
+        gmap: 'Hyde+Park+Sydney'
       },
       {
-        name: '皇冠海鲜酒楼 Royal Palace Seafood', lat: -33.8795, lng: 151.2046, type: 'food', time: '18:30',
-        desc: '唐人街传统粤菜，适合带父母家庭聚餐。招牌龙虾姜葱伊面、点心推车。',
-        budget: '人均AUD$40-60 / 3人约AUD$120-180',
-        detail: '地址：393-399 Sussex St, Haymarket\n三层大圆桌，适合家庭聚餐\n下午3点前有点心推车\n备选：Nick\'s Seafood（达令港海鲜）或 Pancakes on the Rocks（岩石区24h）',
-        pay: { cash: 1, card: 1, alipay: 0.5 },
-        gmap: 'Royal+Palace+Seafood+Sydney+Haymarket'
-      },
-      {
-        name: '环形码头 Circular Quay', lat: -33.8616, lng: 151.2107, type: 'transport', time: '12:00',
-        desc: '乘F1渡轮前往曼利海滩的出发点。也是歌剧院和海港大桥的步行起点。',
-        budget: 'Opal卡日封顶AUD$9.65（周日）',
-        detail: '可直接刷Visa/Mastercard/Apple Pay，无需买实体卡\n3人当天交通费最多AUD$28.95',
-        gmap: 'Circular+Quay+Sydney'
+        name: 'Aria 晚餐（可选）', lat: -33.8650, lng: 151.2125, type: 'food', time: '20:30',
+        desc: '谷歌4.5分。现代澳洲菜Fine Dining，海港景观。适合犒劳自己的一天结束。需提前2-4周预订。',
+        budget: '人均AUD$150-250 / 3人约AUD$450-750',
+        detail: '地址：1 Macquarie St（环形码头旁）\n高端Fine Dining，需提前2-4周预订\n备选：\nBennelong（歌剧院内，4.5★，$120-200）\nCafe Sydney（Customs House 5楼，4.5★，$80-120，360度海港全景）\n如太累不想正式用餐，可回酒店附近吃',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Aria+Restaurant+Sydney'
       }
     ]
   },
