@@ -244,7 +244,7 @@ const DAYS = [
 
   // ── Day 1: 悉尼 ──
   {
-    id: 1, label: 'D1 悉尼', date: '2/8 周日', title: '悉尼一日游（动物园+歌剧院+日落）', color: '#ff9500',
+    id: 1, label: 'D1 悉尼', date: '2/8 周日', title: '悉尼一日游（动物园+歌剧院+植物园+日落+夜景）', color: '#ff9500',
     locations: [
       {
         name: '曼特拉2酒店 Mantra 2 Bond Street', lat: -33.8645, lng: 151.2076, type: 'hotel', time: '08:30',
@@ -269,64 +269,63 @@ const DAYS = [
         gmap: 'Taronga+Zoo+Sydney'
       },
       {
-        name: 'Whalebridge 法式海鲜餐厅', lat: -33.8640, lng: 151.2120, type: 'food', time: '13:15',
-        desc: '⭐谷歌4.9分。环形码头东侧法式海鲜小酒馆，海港露天座。轮渡返回后步行2分钟。',
-        budget: '人均AUD$80-130 / 3人约AUD$240-390',
-        detail: '地址：8-10 East Circular Quay\n法式海鲜，生蚝、龙虾、海鲜拼盘\n海港景观露天座位\n备选：\nBouillon L\'Entrecôte（法式牛排4.9★，人均$50-80，6 Loftus St）\nGrana（意大利手工面4.5★，人均$60-100，5-7 Young St）',
-        pay: { cash: 1, card: 1, alipay: 0.5 },
-        gmap: 'Whalebridge+Sydney'
+        name: 'Bar Luca 澳洲汉堡', lat: -33.8660, lng: 151.2100, type: 'food', time: '13:15',
+        desc: '⭐谷歌4.5分。100%澳洲本地牛肉汉堡，悉尼最著名汉堡店。人均AUD$18-25。',
+        budget: '人均AUD$18-25 / 3人约AUD$54-75',
+        detail: '地址：52 Phillip St, Sydney（环形码头步行5min）\n招牌：Blame Canada汉堡$22（牛肉+枫糖培根）\nMr T-Ruffle $22（松露蛋黄酱）\nMac Daddy $25（双层牛肉双层芝士）\n100%澳洲本地采购牛肉，Halal认证\n周日营业12:00-16:00\n备选：\nBanksia Bakehouse（澳洲肉派4.6★，$10-20，225 George St）\nThe Rocks Cafe（现代澳洲菜4.2★，$26-28，99 George St）',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Bar+Luca+Sydney'
+      },
+      {
+        name: 'Paddy\'s Markets 购物', lat: -33.8795, lng: 151.2049, type: 'spot', time: '14:00',
+        desc: '⭐悉尼最便宜的纪念品市场！UGG靴、保健品、服饰、小商品。周日10:00-18:00。',
+        budget: '丰俭由人',
+        detail: '地址：Market City, 9-13 Hay St, Haymarket\n周日营业10:00-18:00 ⚠️18:00关门！\n楼下Paddy\'s买纪念品，楼上Market City折扣品牌店\n推荐买：UGG靴、绵羊油、保健品、考拉玩偶\n⚠️必须在14:45前逛完，15:00要去歌剧院导览',
+        gmap: 'Paddys+Market+Sydney'
       },
       {
         name: '悉尼歌剧院中文导览', lat: -33.8568, lng: 151.2153, type: 'spot', time: '14:30',
-        desc: '⭐1小时中文讲解导览。参观歌剧院内部主要演出厅，了解建筑历史和幕后故事。',
+        desc: '⭐1小时中文讲解导览（最后一场14:30）。参观歌剧院内部主要演出厅，了解建筑历史和幕后故事。',
         budget: 'AUD$48/人 / 3人AUD$144',
-        detail: '周日场次：9:30、11:00、13:00、14:30\n推荐选14:30场（15:00导览开始，16:00结束，衔接日落）\n提前15分钟到下层大厅(Lower Concourse)Welcome Centre办理手续\n乘扶梯到门厅层9号出发点集合\n⚠️全程步行2.5km+上下300级台阶+全程站立1h，无电梯\n父母酌情参加，可只外观拍照\n严禁录影，允许拍照\n预约：sydneyoperahouse.com/tours/mandarin-tour\n提前2-4周预订',
+        detail: '周日场次：9:30、11:00、13:00、14:30（最后一场）\n推荐选14:30场（15:00导览开始，16:00结束）\n导览结束后正好进植物园→麦考瑞座椅→日落\n提前15分钟到下层大厅(Lower Concourse)Welcome Centre办理手续\n乘扶梯到门厅层9号出发点集合\n⚠️全程步行2.5km+上下300级台阶+全程站立1h，无电梯\n父母酌情参加，可只外观拍照\n严禁录影，允许拍照\n预约：sydneyoperahouse.com/tours/mandarin-tour\n提前2-4周预订',
         reserve: 'https://www.sydneyoperahouse.com/tours/mandarin-tour',
         gmap: 'Sydney+Opera+House+Welcome+Centre'
       },
       {
-        name: 'Opera Bar 日落小酌', lat: -33.8560, lng: 151.2155, type: 'drink', time: '16:00',
-        desc: '歌剧院下方露天酒吧。导览结束后休息，边喝边看海港。也可在此等日落。',
-        budget: '人均AUD$30-50',
-        detail: '歌剧院Lower Concourse\n露天座位面朝海港大桥\n可点饮品和小食\n不正式用餐，适合休息等候',
-        pay: { cash: 1, card: 1 },
-        gmap: 'Opera+Bar+Sydney'
+        name: '皇家植物园 Royal Botanic Garden', lat: -33.8642, lng: 151.2167, type: 'spot', time: '16:15',
+        desc: '⭐歌剧院导览出来直接进植物园。沿海滨步道往东走，风景优美。7:00-日落（约19:30）。',
+        budget: '免费',
+        detail: '从歌剧院旁进入植物园\n沿海滨步道往东走向麦考瑞夫人座椅\n植物园大量长椅可坐休息\n2月UV指数9（极高），但下午4点后阳光已弱\n免费\n⚠️植物园日落（约19:30）关门，但麦考瑞座椅在植物园外侧步道上，不受影响',
+        gmap: 'Royal+Botanic+Garden+Sydney'
       },
       {
         name: '🌅 麦考瑞夫人座椅 Mrs Macquaries Chair', lat: -33.8567, lng: 151.2233, type: 'spot', time: '17:00',
         desc: '⭐悉尼最佳日落观赏点！面西，可同时拍到歌剧院+海港大桥+日落同框。2月8日日落19:54。',
         budget: '免费',
-        detail: '从歌剧院沿海滨步道步行20-25分钟（约1.5km）\n途经植物园东岸步道，风景优美\n建议18:30前到达占位\n日落19:54，日落后15-20分钟"魔幻时刻"天空最美\n带防蚊液（2月傍晚有蚊虫）\n从座椅可拍到经典明信片角度：歌剧院+大桥+落日',
+        detail: '从植物园内步行到麦考瑞夫人座椅约15-20分钟\n这里是从植物园步道延伸出来的岬角\n建议18:30前到达占位\n日落19:54，日落后15-20分钟"魔幻时刻"天空最美\n经典明信片角度：歌剧院+大桥+落日\n座椅本身是石头长椅，可以坐着等日落\n带防蚊液（2月傍晚有蚊虫）',
         gmap: 'Mrs+Macquaries+Chair+Sydney'
       },
       {
-        name: '皇家植物园 Royal Botanic Garden', lat: -33.8642, lng: 151.2167, type: 'spot', time: '19:30',
-        desc: '日落后穿越植物园回市区。夜晚步道有灯光，约15分钟穿过。7:00-日落开放（约19:30）。',
+        name: '🌌 环形码头夜景', lat: -33.8568, lng: 151.2095, type: 'spot', time: '20:00',
+        desc: '⭐歌剧院灯光+海港大桥灯光倒映水面。日落后走回环形码头，沿途边走边拍。',
         budget: '免费',
-        detail: '开放时间：7:00-日落（约19:30）\n从麦考瑞夫人座椅向西北穿越植物园\n约15分钟步行\n注意：日落闭园，需在19:30前通过\n如已闭园可沿Mrs Macquaries Road绕行',
-        gmap: 'Royal+Botanic+Garden+Sydney'
+        detail: '从麦考瑞夫人座椅沿海滨步道走回环形码头约20-30分钟\n日落后"魔幻时刻"天空色彩最美\n到环形码头后可看歌剧院夜景灯光\n海港大桥灯光倒映水面\n安全、人多、治安好',
+        gmap: 'Circular+Quay+Sydney+night'
       },
       {
-        name: '圣玛丽大教堂 St Mary\'s Cathedral', lat: -33.8708, lng: 151.2131, type: 'spot', time: '20:00',
-        desc: '澳大利亚最大教堂之一，新哥特式建筑。晚间亮灯很美。位于海德公园北侧。',
-        budget: '免费',
-        detail: '周日开放时间：6:30-19:00\n到时可能已关门，外观拍照即可\n晚间亮灯很美\n从植物园步行10-15分钟\n位于College Street旁',
-        gmap: 'St+Marys+Cathedral+Sydney'
+        name: '🌌 岩石区夜景 The Rocks', lat: -33.8598, lng: 151.2089, type: 'spot', time: '20:30',
+        desc: '悉尼最古老街区夜景。鹅卵石街道+暖黄灯光，历史街区夜间氛围极佳。',
+        budget: '免费漫步',
+        detail: '从环形码头步行3分钟\n鹅卵石街道+暖黄灯光\n有酒吧和餐厅，晚上热闹\n安全，游客多\n可上海港大桥人行道看歌剧院夜景（免费）',
+        gmap: 'The+Rocks+Sydney+night'
       },
       {
-        name: '海德公园 Hyde Park', lat: -33.8715, lng: 151.2133, type: 'spot', time: '20:15',
-        desc: '澳大利亚最古老的城市公园。阿奇博尔德喷泉夜景，林荫步道适合散步。',
-        budget: '免费',
-        detail: '从圣玛丽大教堂步行1-2分钟\n阿奇博尔德喷泉（Archibald Fountain）\n林荫大树遮蔽的步道\n夜晚有灯光照明，氛围浪漫\n公园周边有很多餐厅\n回酒店步行约10分钟',
-        gmap: 'Hyde+Park+Sydney'
-      },
-      {
-        name: 'Aria 晚餐（可选）', lat: -33.8650, lng: 151.2125, type: 'food', time: '20:30',
-        desc: '谷歌4.5分。现代澳洲菜Fine Dining，海港景观。适合犒劳自己的一天结束。需提前2-4周预订。',
-        budget: '人均AUD$150-250 / 3人约AUD$450-750',
-        detail: '地址：1 Macquarie St（环形码头旁）\n高端Fine Dining，需提前2-4周预订\n备选：\nBennelong（歌剧院内，4.5★，$120-200）\nCafe Sydney（Customs House 5楼，4.5★，$80-120，360度海港全景）\n如太累不想正式用餐，可回酒店附近吃',
+        name: 'Opera Bar 歌剧院旁晚餐', lat: -33.8560, lng: 151.2155, type: 'food', time: '21:15',
+        desc: '谷歌4.0分。歌剧院下方露天餐厅，现代澳洲菜+海鲜。海港夜景用餐，人均AUD$20-30。',
+        budget: '人均AUD$20-30 / 3人约AUD$60-90',
+        detail: '地址：Lower Concourse, Sydney Opera House\n$30以内的澳洲特色菜：\n椒盐鱿鱼$26（澳洲经典海鲜小吃）\n芝士汉堡$29（澳洲牛肉饼+薯条）\n散养炸鸡汉堡$29\n海港大桥夜景+歌剧院灯光\n回酒店步行约8分钟\n备选：\nLode Pies（环形码头内肉派4.4★，$5-15）\nBanksia Bakehouse（澳洲肉派4.6★，$10-20，225 George St）',
         pay: { cash: 1, card: 1 },
-        gmap: 'Aria+Restaurant+Sydney'
+        gmap: 'Opera+Bar+Sydney'
       }
     ]
   },
