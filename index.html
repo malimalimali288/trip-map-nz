@@ -244,20 +244,20 @@ const DAYS = [
 
   // ── Day 1: 悉尼 ──
   {
-    id: 1, label: 'D1 悉尼', date: '2/8 周日', title: '悉尼一日游（动物园+歌剧院+植物园+日落+夜景）', color: '#ff9500',
+    id: 1, label: 'D1 悉尼', date: '2/8 周一', title: '悉尼一日游（动物园+歌剧院+植物园+日落+夜景）', color: '#ff9500',
     locations: [
       {
         name: '曼特拉2酒店 Mantra 2 Bond Street', lat: -33.8645, lng: 151.2076, type: 'hotel', time: '08:30',
         desc: '下飞机后先到酒店寄存行李。2 Bond Street，CBD核心区，步行到环形码头8分钟。入住14:00，可提前寄存。',
-        budget: '—',
-        detail: '机场→酒店：机场快线火车到Wynyard站(13min)+步行5min约AUD$18.6/人\n或Uber约AUD$60-80（3人+行李推荐）\n退房11:00，入住14:00',
+        budget: 'Opal卡周一封顶$19.30/人（含全天交通）',
+        detail: '省钱路线：T1/T3航站楼坐420路公交→Mascot站(10-15min)→换T8火车→Wynyard站(12min)→步行5min到酒店\nMascot不是机场站，不收机场通道费$17！\n公交+火车换乘有$2折扣\n3人交通约$57.90（日封顶$19.30×3）\n比机场直达火车省$60+\nOpal卡：机场便利店7-Eleven买，卡免费，充值$10起\n退房11:00，入住14:00',
         gmap: 'Mantra+2+Bond+Street+Sydney'
       },
       {
         name: '环形码头 Circular Quay', lat: -33.8616, lng: 151.2107, type: 'transport', time: '09:15',
         desc: '从酒店步行8分钟到Wharf 6，乘轮渡去塔龙加动物园。12分钟渡轮。',
-        budget: '轮渡约AUD$7.6/人',
-        detail: '可直接刷Visa/Mastercard/Apple Pay，无需买Opal卡\nOpal周日日封顶$9.65/人\n轮渡约每20-30分钟一班',
+        budget: '轮渡含在Opal日封顶$19.30内',
+        detail: '用Opal卡刷卡乘船\nOpal周一日封顶$19.30/人（比周日$9.65高）\n非高峰时段（9:00-16:00）轮渡7折\n轮渡约每20-30分钟一班\n上下船都要tap on/off',
         gmap: 'Circular+Quay+Wharf+6+Sydney'
       },
       {
@@ -272,22 +272,22 @@ const DAYS = [
         name: 'Bar Luca 澳洲汉堡', lat: -33.8660, lng: 151.2100, type: 'food', time: '13:15',
         desc: '⭐谷歌4.5分。100%澳洲本地牛肉汉堡，悉尼最著名汉堡店。人均AUD$18-25。',
         budget: '人均AUD$18-25 / 3人约AUD$54-75',
-        detail: '地址：52 Phillip St, Sydney（环形码头步行5min）\n招牌：Blame Canada汉堡$22（牛肉+枫糖培根）\nMr T-Ruffle $22（松露蛋黄酱）\nMac Daddy $25（双层牛肉双层芝士）\n100%澳洲本地采购牛肉，Halal认证\n周日营业12:00-16:00\n备选：\nBanksia Bakehouse（澳洲肉派4.6★，$10-20，225 George St）\nThe Rocks Cafe（现代澳洲菜4.2★，$26-28，99 George St）',
+        detail: '地址：52 Phillip St, Sydney（环形码头步行5min）\n招牌：Blame Canada汉堡$22（牛肉+枫糖培根）\nMr T-Ruffle $22（松露蛋黄酱）\nMac Daddy $25（双层牛肉双层芝士）\n100%澳洲本地采购牛肉，Halal认证\n周一营业11:00-21:00\n备选：\nBanksia Bakehouse（澳洲肉派4.6★，$10-20，225 George St）\nThe Rocks Cafe（现代澳洲菜4.2★，$26-28，99 George St）',
         pay: { cash: 1, card: 1 },
         gmap: 'Bar+Luca+Sydney'
       },
       {
         name: 'Paddy\'s Markets 购物', lat: -33.8795, lng: 151.2049, type: 'spot', time: '14:00',
-        desc: '⭐悉尼最便宜的纪念品市场！UGG靴、保健品、服饰、小商品。周日10:00-18:00。',
+        desc: '⭐悉尼最便宜的纪念品市场！UGG靴、保健品、服饰、小商品。周一10:00-18:00。',
         budget: '丰俭由人',
-        detail: '地址：Market City, 9-13 Hay St, Haymarket\n周日营业10:00-18:00 ⚠️18:00关门！\n楼下Paddy\'s买纪念品，楼上Market City折扣品牌店\n推荐买：UGG靴、绵羊油、保健品、考拉玩偶\n⚠️必须在14:45前逛完，15:00要去歌剧院导览',
+        detail: '地址：Market City, 9-13 Hay St, Haymarket\n周一营业10:00-18:00 ⚠️18:00关门！\n楼下Paddy\'s买纪念品，楼上Market City折扣品牌店\n推荐买：UGG靴、绵羊油、保健品、考拉玩偶\n⚠️必须在14:45前逛完，15:00要去歌剧院导览',
         gmap: 'Paddys+Market+Sydney'
       },
       {
         name: '悉尼歌剧院中文导览', lat: -33.8568, lng: 151.2153, type: 'spot', time: '14:30',
         desc: '⭐1小时中文讲解导览（最后一场14:30）。参观歌剧院内部主要演出厅，了解建筑历史和幕后故事。',
         budget: 'AUD$48/人 / 3人AUD$144',
-        detail: '周日场次：9:30、11:00、13:00、14:30（最后一场）\n推荐选14:30场（15:00导览开始，16:00结束）\n导览结束后正好进植物园→麦考瑞座椅→日落\n提前15分钟到下层大厅(Lower Concourse)Welcome Centre办理手续\n乘扶梯到门厅层9号出发点集合\n⚠️全程步行2.5km+上下300级台阶+全程站立1h，无电梯\n父母酌情参加，可只外观拍照\n严禁录影，允许拍照\n预约：sydneyoperahouse.com/tours/mandarin-tour\n提前2-4周预订',
+        detail: '周一场次：9:30、11:00、13:00、14:30（最后一场）\n推荐选14:30场（15:00导览开始，16:00结束）\n导览结束后正好进植物园→麦考瑞座椅→日落\n提前15分钟到下层大厅(Lower Concourse)Welcome Centre办理手续\n乘扶梯到门厅层9号出发点集合\n⚠️全程步行2.5km+上下300级台阶+全程站立1h，无电梯\n父母酌情参加，可只外观拍照\n严禁录影，允许拍照\n预约：sydneyoperahouse.com/tours/mandarin-tour\n提前2-4周预订',
         reserve: 'https://www.sydneyoperahouse.com/tours/mandarin-tour',
         gmap: 'Sydney+Opera+House+Welcome+Centre'
       },
@@ -649,7 +649,7 @@ function overviewContent() {
 <div class="hero"><h1>悉尼+新西兰南岛行程</h1><p class="subtitle">2027年2月7日 — 2月17日 · 3人自驾 · 11天</p></div>
 <div class="info-grid">
   <div class="info-card"><div class="label">出行人</div><div class="value">20岁女儿 + 50多岁父母</div></div>
-  <div class="info-card"><div class="label">交通方式</div><div class="value">悉尼步行+渡轮 / 南岛自驾</div></div>
+  <div class="info-card"><div class="label">交通方式</div><div class="value">Opal卡+渡轮 / 南岛自驾</div></div>
   <div class="info-card"><div class="label">航班</div><div class="value">新航开口程 + 跨塔斯曼海</div></div>
   <div class="info-card"><div class="label">预估总费用</div><div class="value">3人约 ¥4.6-7.2万</div></div>
 </div>
@@ -663,7 +663,7 @@ function overviewContent() {
 </div>
 <div class="pay-summary">
   <h4>🇦🇺 澳大利亚</h4>
-  可直接刷银行卡/手机支付乘公交（Opal卡非必需）。周日Opal日封顶AUD$9.65/人。<br>
+  Opal卡周一封顶AUD$19.30/人（比周日$9.65高，但仍比单买划算）。也可刷银行卡/手机支付（同价但无周封顶）。<br>
   <span class="warn">⚠️ 2月UV指数9（极高），必涂防晒霜SPF30+、戴帽子和太阳镜。</span>
 </div>
 <div class="pay-summary">
