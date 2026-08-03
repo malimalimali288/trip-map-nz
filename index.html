@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>悉尼+新西兰南岛行程地图</title>
-<meta name="description" content="2027年2月7-18日 悉尼一日游 + 新西兰南岛十日自驾游">
+<meta name="description" content="2027年2月7-18日 悉尼一日游 + 新西兰南岛十日自驾游（箭镇淘金+古堡+海钓）">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -470,115 +470,65 @@ const DAYS = [
 
   // ── Day 6: 瓦纳卡→皇后镇→蒂阿瑙 ──
   {
-    id: 6, label: 'D6 小镇', date: '2/13 周六', title: '瓦纳卡→克伦威尔→克莱德→箭镇→皇后镇', color: '#ff9500',
+    id: 6, label: 'D6 淘金', date: '2/13 周六', title: '瓦纳卡→箭镇（华人淘金村）→皇后镇', color: '#ff9500',
     locations: [
       {
-        name: '克伦威尔 Cromwell', lat: -45.0419, lng: 169.1877, type: 'spot', time: '09:30',
-        desc: '⭐水果之乡！2月樱桃、杏、油桃季。Heritage Precinct淘金时代老街。Real Fruit Ice Cream必吃。',
-        budget: '水果NZ$5-15 / 冰淇淋NZ$6-8',
-        detail: '地址：Cromwell Heritage Precinct\n沿SH6从瓦纳卡出发55min/55km\n路边水果摊价格便宜，樱桃NZ$8-12/kg\nHeritage Precinct：淘金时代建筑，老式店面\n全镇人口约5000，游客远少于皇后镇\n2月夏季周日有农夫市集',
-        gmap: 'Cromwell+Heritage+Precinct'
-      },
-      {
-        name: '克莱德 Clyde', lat: -45.2044, lng: 169.3116, type: 'spot', time: '11:00',
-        desc: '⭐1860年代淘金小镇原貌！冯小刚《只有芸知道》取景地。极安静，几乎没有游客。黑皮诺葡萄酒产区。',
-        budget: '免费参观',
-        detail: '距克伦威尔15min/12km，经SH8\nOliver\'s Restaurant：当地名店，历史建筑改造，花园庭院\n老邮局、石砌建筑群保留完整\n奥塔哥中部铁道步道起点，可骑行一小段\n克莱德大坝：新西兰最大混凝土坝\n全镇仅几百人，真正的隐藏宝石',
-        gmap: 'Clyde+New+Zealand'
-      },
-      {
-        name: "Oliver's Restaurant Clyde", lat: -45.2052, lng: 169.3124, type: 'food', time: '12:00',
-        desc: '克莱德名店，历史建筑改造。花园庭院午餐，周边黑皮诺酒庄可品酒。',
-        budget: '人均NZ$25-40 / 3人约NZ$75-120',
-        detail: '地址：7 Sunderland St, Clyde\n《只有芸知道》片中大量出镜\n推荐：羊排、牛排、本地黑皮诺\n营业时间：10:00-16:00（午餐）\n备选：Post Office Cafe（简餐咖啡）',
-        pay: { cash: 1, card: 1 },
-        gmap: 'Olivers+Clyde+New+Zealand'
-      },
-      {
-        name: '箭镇 Arrowtown', lat: -44.9431, lng: 168.8390, type: 'spot', time: '14:30',
+        name: '箭镇 Arrowtown', lat: -44.9431, lng: 168.8390, type: 'spot', time: '09:30',
         desc: '⭐⭐华人淘金历史村！19世纪华人矿工遗址，对中国家庭有特殊意义。60+栋淘金时代建筑。',
         budget: '博物馆NZ$10/人 / 遗址免费',
-        detail: '距克莱德1.5h/100km，经Crown Range Road翻山\n华人淘金历史村（Arrowtown Chinese Settlement）：沿箭河步道5分钟即到，免费\n19世纪华人矿工居住遗址，简陋石屋\n白金汉街（Buckingham St）：60+栋淘金时代建筑\nLakes District Museum：NZ$10/人\n距皇后镇仅20min/20km',
+        detail: '距瓦纳卡1h/70km，经Crown Range Road翻山\n华人淘金历史村（Arrowtown Chinese Settlement）：沿箭河步道5分钟即到，免费\n19世纪华人矿工居住遗址，简陋石屋——对中国人特别有意义\n白金汉街（Buckingham St）：60+栋淘金时代建筑\nLakes District Museum：NZ$10/人\n箭河步道 Arrow River Trail：平路漫步，淘金时代水渠遗迹\n距皇后镇仅20min/20km',
         gmap: 'Arrowtown+Chinese+Settlement'
+      },
+      {
+        name: 'Provisions Cafe 箭镇', lat: -44.9430, lng: 168.8385, type: 'food', time: '12:30',
+        desc: '箭镇热门咖啡馆，三明治、沙拉、咖啡。当地食材。',
+        budget: '人均NZ$15-25 / 3人约NZ$45-75',
+        detail: '箭镇白金汉街旁\n备选：Slow Cuts（箭镇汉堡店，NZ$15-20）\n箭镇餐厅不多但品质不错',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Provisions+Cafe+Arrowtown'
+      },
+      {
+        name: '皇后镇天空缆车 Skyline Gondola', lat: -45.8200, lng: 168.6600, type: 'spot', time: '14:00',
+        desc: '南半球最陡缆车，8分钟到Bob\'s Peak(790m)。全景皇后镇、瓦卡蒂普湖、卓越山脉。+Luge滑板车3圈。',
+        budget: '缆车+3圈Luge 成人NZ$78 / 3人约NZ$234',
+        detail: '缆车运营时间：9:00-21:00（夏季）\nLuge：第一次必须走初级赛道，之后可选高级赛道\n50多岁父母也能轻松参与Luge，很安全\n从箭镇开车20分钟即到\n傍晚回箭镇住宿（比皇后镇便宜30-40%）',
+        reserve: 'https://www.skyline.co.nz/queenstown/',
+        gmap: 'Skyline+Gondola+Queenstown'
       },
       {
         name: 'Fergburger', lat: -45.8210, lng: 168.6580, type: 'food', time: '18:00',
         desc: '⭐皇后镇必打卡！巨大gourmet汉堡，全天营业。排队20-40分钟，建议APP提前下单。',
         budget: 'NZ$14-24/个 / 3人约NZ$50-70',
-        detail: '经典推荐：Big Al（牛肉）、Holsum（鸡肉）、Sweet Bambi（鹿肉）\n隔壁Mrs Ferg Gelato冰淇淋也值得一试\nAPP提前下单避免排队\n到达皇后镇第一晚的晚餐',
+        detail: '经典推荐：Big Al（牛肉）、Holsum（鸡肉）、Sweet Bambi（鹿肉）\n隔壁Mrs Ferg Gelato冰淇淋也值得一试\nAPP提前下单避免排队',
         pay: { cash: 1, card: 1 },
         gmap: 'Fergburger+Queenstown'
       },
       {
-        name: '皇后镇 Queenstown', lat: -45.0312, lng: 168.6626, type: 'hotel', time: '17:00',
-        desc: '住3晚（2/13-2/15）。湖畔motel/apartment，作为峡湾前后的枢纽基地。',
-        budget: 'NZ$300-500/晚（住3晚）',
-        detail: '选含厨房的公寓省餐费\n推荐：Heartland Hotel / Novotel Queenstown Lakeside\n湖畔步行到Fergburger、缆车、餐厅\nDay7格林诺奇一日往返，Day8去蒂阿瑙',
-        gmap: 'Queenstown+New+Zealand'
+        name: '箭镇民宿 Arrowtown Lodge', lat: -44.9430, lng: 168.8385, type: 'hotel', time: '19:30',
+        desc: '住箭镇（1晚）。箭镇民宿NZ$180-280/晚，比皇后镇便宜30-40%。安静小镇氛围。',
+        budget: 'NZ$180-280/晚',
+        detail: '推荐：Arrowtown Lodge（B&B，历史建筑）\n或Airbnb度假屋\n箭镇晚上很安静，餐厅少但品质不错\n第二天一早出发去蒂阿瑙',
+        gmap: 'Arrowtown+Lodge'
       }
     ]
   },
 
-  // ── Day 7: 格林诺奇 ──
+  // ── Day 7: 箭镇→蒂阿瑙 ──
   {
-    id: 7, label: 'D7 格林诺奇', date: '2/14 周日', title: '⭐皇后镇→格林诺奇（指环王取景地）→皇后镇', color: '#007aff',
-    locations: [
-      {
-        name: "Bennett's Bluff 观景台", lat: -45.0750, lng: 168.5830, type: 'spot', time: '09:30',
-        desc: '⭐世界级观景台！俯瞰瓦卡蒂普湖全景，L型弯道+湖光山色。拍照圣地。',
-        budget: '免费',
-        detail: '距皇后镇30min/25km，沿瓦卡蒂普湖西岸公路\n路边有停车区和观景平台\n早晨光线最佳，湖面平静倒影清晰\n必停拍照点',
-        gmap: 'Bennetts+Bluff+Lookout+Queenstown'
-      },
-      {
-        name: '格林诺奇 Glenorchy', lat: -45.0069, lng: 168.3900, type: 'spot', time: '10:30',
-        desc: '⭐"路的尽头"世外桃源。仅500居民，游客远少于皇后镇。红船屋——新西兰最上镜地标之一。',
-        budget: '免费',
-        detail: '距Bennett\'s Bluff 30min/21km\n红船屋（Red Boat Shed）：新西兰最上镜地标，湖边小红船屋\nGlenorchy Lagoon湿地步道：平路木栈道30min往返，湖面雪山倒影\n全镇仅500居民，真正的世外桃源\n达特河喷射快艇（可选）：NZ$229/人，父母酌情',
-        gmap: 'Glenorchy+New+Zealand'
-      },
-      {
-        name: 'Glenorchy Hotel', lat: -45.0070, lng: 168.3910, type: 'food', time: '12:00',
-        desc: '格林诺奇唯一餐厅+酒吧，湖景用餐。简餐为主，氛围好。',
-        budget: '人均NZ$20-30 / 3人约NZ$60-90',
-        detail: '选择有限但品质不错\n推荐：鱼薯、汉堡、本地啤酒\n湖景座位，悠闲用餐\n备选：Camp Glenorchy Cafe（咖啡简餐）',
-        pay: { cash: 1, card: 1 },
-        gmap: 'Glenorchy+Hotel+New+Zealand'
-      },
-      {
-        name: 'Paradise 谷地', lat: -44.9333, lng: 168.3833, type: 'spot', time: '13:00',
-        desc: '⭐《指环王》Isengard取景地！山毛榉森林+雪山草地，仿佛走进中土世界。',
-        budget: '免费',
-        detail: '距格林诺奇15min车程\n沿Glenorchy-Paradise Road行驶\n碎石路面但普通车可通行\nParadise Trust停车场下车步行\n山毛榉森林+雪山+草地，电影级风景\n自驾游览即可，停车拍照\n注意：雨天路面泥泞，谨慎驾驶',
-        gmap: 'Paradise+Valley+Glenorchy'
-      },
-      {
-        name: '皇后镇天空缆车 Skyline Gondola', lat: -45.8200, lng: 168.6600, type: 'spot', time: '16:00',
-        desc: '南半球最陡缆车，8分钟到Bob\'s Peak(790m)。全景皇后镇、瓦卡蒂普湖、卓越山脉。+Luge滑板车3圈。',
-        budget: '缆车+3圈Luge 成人NZ$78 / 3人约NZ$234',
-        detail: '缆车运营时间：9:00-21:00（夏季）\nLuge：第一次必须走初级赛道，之后可选高级赛道\n50多岁父母也能轻松参与Luge，很安全\n也可徒步上Bob\'s Peak（Tiki Trail，免费，约1h）然后缆车下来\n从格林诺奇返回皇后镇45min/46km',
-        reserve: 'https://www.skyline.co.nz/queenstown/',
-        gmap: 'Skyline+Gondola+Queenstown'
-      }
-    ]
-  },
-
-  // ── Day 8: 皇后镇→蒂阿瑙 ──
-  {
-    id: 8, label: 'D8 蒂阿瑙', date: '2/15 周一', title: '皇后镇→蒂阿瑙（萤火虫洞）', color: '#af52de',
+    id: 7, label: 'D7 蒂阿瑙', date: '2/14 周日', title: '箭镇→蒂阿瑙（萤火虫洞）', color: '#007aff',
     locations: [
       {
         name: '蒂阿瑙 Te Anau', lat: -45.4147, lng: 167.7142, type: 'hotel', time: '11:00',
         desc: '住2晚。湖畔住宿，步行到RealNZ游客中心（峡湾游船和萤火虫洞出发地）。',
         budget: '汽车旅馆NZ$200-300/晚（住2晚）',
-        detail: '距皇后镇2h/172km，经SH6和SH94\n比皇后镇安静得多，湖畔小镇\nFreshChoice Te Anau超市采购明日峡湾午餐（路上无餐厅！）\n建议买面包、水果、水、零食\nMiles Better Pies著名肉派店NZ$6-9',
+        detail: '距箭镇2.5h/180km\n比皇后镇安静得多，湖畔小镇\nFreshChoice Te Anau超市采购明日峡湾午餐（路上无餐厅！）\nMiles Better Pies著名肉派店NZ$6-9',
         gmap: 'Te+Anau+New+Zealand'
       },
       {
         name: '蒂阿瑙萤火虫洞', lat: -45.4150, lng: 167.7150, type: 'spot', time: '14:00',
         desc: '⭐乘船穿越蒂阿瑙湖→步行至洞穴→乘小舟看萤火虫。2h15min。唯一运营商RealNZ。',
         budget: '成人NZ$145/人 / 3人NZ$435',
-        detail: '出发地点：RealNZ Visitor Centre, 85 Lakefront Drive, Te Anau\n行程：乘船穿湖(20min)→步行动导览洞穴→乘小舟漂流地下河看萤火虫→返回\n洞内温度8-12°C！必带保暖外套！\n洞内禁止拍照（闪光灯影响萤火虫）\n道路湿滑穿防滑鞋\n提前20分钟报到\n提前2-4周预订',
+        detail: '出发地点：RealNZ Visitor Centre, 85 Lakefront Drive, Te Anau\n行程：乘船穿湖(20min)→步行动导览洞穴→乘小舟漂流地下河看萤火虫→返回\n洞内温度8-12°C！必带保暖外套！\n洞内禁止拍照\n道路湿滑穿防滑鞋\n提前20分钟报到\n提前2-4周预订',
         reserve: 'https://www.realnz.com/en/experiences/te-anau-glowworm-caves/',
         gmap: 'Te+Anau+Glowworm+Caves'
       },
@@ -586,16 +536,16 @@ const DAYS = [
         name: 'Redcliff Cafe', lat: -45.4150, lng: 167.7160, type: 'food', time: '18:30',
         desc: '蒂阿瑙人气餐厅，4.5★。当地食材，湖畔氛围。',
         budget: '人均NZ$25-35 / 3人约NZ$75-105',
-        detail: '备选：Cafe Il Corallo（意大利简餐，人均NZ$20-30）\nMiles Better Pies（肉派，NZ$6-9，简餐）',
+        detail: '备选：Cafe Il Corallo（意大利简餐，人均NZ$20-30）',
         pay: { cash: 1, card: 1 },
         gmap: 'Redcliff+Cafe+Te+Anau'
       }
     ]
   },
 
-  // ── Day 9: 米尔福德峡湾 ──
+  // ── Day 8: 米尔福德峡湾 ──
   {
-    id: 9, label: 'D9 峡湾', date: '2/16 周二', title: '⭐米尔福德峡湾一日游', color: '#007aff',
+    id: 8, label: 'D8 峡湾', date: '2/15 周一', title: '⭐米尔福德峡湾一日游', color: '#007aff',
     locations: [
       {
         name: 'RealNZ游客中心（出发地）', lat: -45.4150, lng: 167.7150, type: 'transport', time: '07:30',
@@ -615,14 +565,14 @@ const DAYS = [
         name: 'Homer Tunnel', lat: -44.7333, lng: 167.7500, type: 'transport', time: '09:30',
         desc: '单行交替隧道，大巴排队等待。穿越后进入米尔福德峡湾区域。',
         budget: '含在套餐内',
-        detail: '隧道长1.2km，海拔945m\n单行交替，需等红绿灯\n隧道内无灯，大巴有车灯',
+        detail: '隧道长1.2km，海拔945m\n单行交替，需等红绿灯',
         gmap: 'Homer+Tunnel+Fiordland'
       },
       {
         name: '米尔福德峡湾游船', lat: -44.6717, lng: 167.9256, type: 'spot', time: '10:00',
         desc: '⭐世界第八大奇迹。1h45min-2h游船。瀑布、海豹、企鹅（幸运的话）。',
         budget: '含在大巴+游船套餐内',
-        detail: '推荐RealNZ（1h45min，大船稳定，$249/人）\n游船有室内外座位，甲板拍照\n雨天瀑布壮观但能见度低——游船风雨无阻\n雨天可选Pure Milford玻璃顶船\n运气好可见海豚、企鹅、海豹',
+        detail: '推荐RealNZ（1h45min，大船稳定，$249/人）\n游船有室内外座位，甲板拍照\n雨天瀑布壮观——游船风雨无阻\n运气好可见海豚、企鹅、海豹',
         gmap: 'Milford+Sound+Cruise+Terminal'
       },
       {
@@ -634,57 +584,89 @@ const DAYS = [
     ]
   },
 
-  // ── Day 10: 南景公路小村 ──
+  // ── Day 9: 蒂阿瑙→古堡 ──
   {
-    id: 10, label: 'D10 南景公路', date: '2/17 周三', title: '蒂阿瑙→图阿塔佩雷→里弗顿→皇后镇', color: '#34c759',
+    id: 9, label: 'D9 古堡', date: '2/16 周二', title: '蒂阿瑙→Castle Claremont古堡（蒂马鲁）', color: '#af52de',
     locations: [
       {
-        name: '图阿塔佩雷 Tuatapere', lat: -46.1333, lng: 167.6833, type: 'spot', time: '10:30',
-        desc: '⭐"新西兰香肠之都"！南景公路关键节点，几乎无外国游客。Te Waewae Bay观海豚。',
-        budget: '香肠NZ$10-15',
-        detail: '距蒂阿瑙2h/138km，经SH94转Southern Scenic Route\n人口约600人，真正的乡村小镇\nTuatapere Butcher Shop手工香肠必尝\nTe Waewae Bay：赫氏海豚和鲸鱼常出没\nBlue Cliffs Beach远眺南海岸\n伐木历史博物馆\n建议在此午餐补给',
-        gmap: 'Tuatapere+New+Zealand'
+        name: 'Castle Claremont 古堡', lat: -44.3800, lng: 171.2000, type: 'hotel', time: '13:30',
+        desc: '⭐⭐1888年新哥特式城堡庄园！火山蓝石建造，11公顷庄园，曾是新西兰总督行宫。10间房城堡酒店。',
+        budget: 'NZ$150-250/晚（含早餐）',
+        detail: '地址：222 Mount Horrible Rd, Timaru\n距蒂阿瑙5h/370km\n建成于1888年，新哥特式/家庭哥特复兴风格\n火山蓝石（南岛最后一次火山活动遗址采石）+ Oamaru石灰石\n历史：Rhodes家族庄园→1902年总督行宫→1932年神学院→1999年精品酒店\n设施：11公顷庄园、小教堂（1955年）、图书馆/台球室、正式餐厅、花园\n下午茶体验\n⚠️2月旺季务必提前3-6个月预订',
+        reserve: 'https://castleclaremont.co.nz/',
+        gmap: 'Castle+Claremont+Timaru'
       },
       {
-        name: '里弗顿 Riverton', lat: -46.3000, lng: 168.0167, type: 'spot', time: '13:30',
-        desc: '⭐新西兰最古老的欧洲人定居点之一（近200年）！艺术家与渔民混居。河口海豚常出没。',
-        budget: '博物馆NZ$10/人',
-        detail: '距图阿塔佩雷1h/80km，沿南海岸公路\n人口约1500人，几乎没有外国游客\nJacob\'s River Estuary河口：海豚常游入觅食\n主街：画廊、手工艺工作室、老式店面\nTe Hikoi Southern Journey博物馆：NZ$10/人\n海滩适合散步，南海岸风光\n200年历史，比皇后镇古老得多',
-        gmap: 'Riverton+New+Zealand'
+        name: 'Caroline Bay 海滩', lat: -44.4000, lng: 171.2500, type: 'spot', time: '16:00',
+        desc: '蒂马鲁主海滩，沿海步道。夏季有嘉年华。散步放松。',
+        budget: '免费',
+        detail: '从古堡开车约15分钟\n沿海步道适合父母散步\nTe Ana毛利岩画中心（可选）\n蒂马鲁植物园（可选）',
+        gmap: 'Caroline+Bay+Timaru'
       },
       {
-        name: '皇后镇 Queenstown', lat: -45.0312, lng: 168.6626, type: 'hotel', time: '18:00',
-        desc: '回到皇后镇，住最后一晚。明天从皇后镇机场飞离。',
-        budget: 'NZ$300-500/晚（最后1晚）',
-        detail: '距里弗顿3h/190km，经Invercargill和SH6\n最后一晚自由活动\n湖畔散步、买纪念品\n晚餐推荐Fergburger或Botrop Butcher',
-        gmap: 'Queenstown+New+Zealand'
+        name: 'The Oxford 餐厅', lat: -44.3950, lng: 171.2450, type: 'food', time: '18:30',
+        desc: '蒂马鲁老牌餐厅，牛排海鲜，古堡晚餐备选。',
+        budget: '人均NZ$30-45 / 3人约NZ$90-135',
+        detail: '备选：古堡自营晚餐（需提前预约）\nSpeight\'s Ale House Timaru（啤酒屋简餐）',
+        pay: { cash: 1, card: 1 },
+        gmap: 'The+Oxford+Timaru'
       }
     ]
   },
 
-  // ── Day 11: 皇后镇→上海 ──
+  // ── Day 10: 古堡→阿卡罗阿海钓 ──
   {
-    id: 11, label: 'D11 返沪', date: '2/18 周四', title: '皇后镇→奥克兰→上海', color: '#86868b',
+    id: 10, label: 'D10 海钓', date: '2/17 周三', title: '古堡→基督城→阿卡罗阿海钓', color: '#34c759',
     locations: [
       {
-        name: '皇后镇机场 ZQN（还车）', lat: -45.0211, lng: 168.7392, type: 'transport', time: '07:30',
-        desc: '皇后镇机场还车（异地还车）。Ezi/Apex/Budget等在机场停车场内。',
-        budget: '异地还车费已计入租车报价',
-        detail: '基督城取车→皇后镇还车\n租车时需注明异地还车\n提前30分钟到机场还车\n皇后镇机场小而美，值机快速',
-        gmap: 'Queenstown+Airport+Rental+Car+Return'
+        name: '阿卡罗阿 Akaroa', lat: -43.8050, lng: 172.9680, type: 'spot', time: '10:30',
+        desc: '⭐法式风情小镇！Banks Peninsula半岛明珠。法国殖民历史，彩色建筑+港口灯塔。',
+        budget: '免费游览',
+        detail: '距基督城1h/82km\nHilltop观景台俯瞰半岛全景（途中必停）\n法式风情街：画廊、精品店、法式面包房\n港口灯塔拍照\n冰淇淋和咖啡\n海钓后逛小镇1-1.5h',
+        gmap: 'Akaroa+New+Zealand'
       },
       {
-        name: '奥克兰机场 AKL（转机）', lat: -37.0082, lng: 174.7850, type: 'transport', time: '10:35',
-        desc: 'NZ614 皇后镇→奥克兰（1h35min）。国内航站楼→国际航站楼步行10分钟。行李直挂上海。',
-        budget: '含在联程机票中',
-        detail: '新西兰航空全程联程值机\n行李从皇后镇直挂上海\n转机3.5小时非常充裕\n国内航站楼到达后沿指示牌步行10min到国际航站楼\n无需出入境，同机场转机',
-        gmap: 'Auckland+Airport+International+Terminal'
+        name: '阿卡罗阿海钓 Coast Up Close', lat: -43.8040, lng: 172.9690, type: 'spot', time: '10:30',
+        desc: '⭐⭐4小时深海海钓！NZD$190/人。Banks Peninsula沿岸，新手友好。渔获可带回！',
+        budget: 'NZ$190/人 / 3人NZ$570',
+        detail: '运营商：Coast Up Close\n时长：4小时（通常10:30-14:30）\n渔获：kahawai、cod、rig、barracuda、perch等近海鱼\nBanks Peninsula沿岸，海面相对平静\n新手友好，船员全程协助\n所有渔具、鱼饵、救生衣、渔获处理\n⚠️提前1-2周预订\n渔获可带去基督城Riverside Market餐厅加工！',
+        reserve: 'https://coastupclose.co.nz/',
+        gmap: 'Coast+Up+Close+Akaroa'
       },
       {
-        name: '上海浦东机场 PVG', lat: 31.1443, lng: 121.8083, type: 'transport', time: '21:30',
-        desc: 'NZ289 奥克兰14:00→上海21:30（约11h30min直飞）。行程结束！',
-        budget: '机票约¥4,000-7,000/人（含在联程中）',
-        detail: '新西兰航空直飞，当天到达上海\n无需过夜转机\n建议提前3小时到皇后镇机场\n全程新航/新西兰航空联程，行李直挂',
+        name: '基督城 Riverside Market', lat: -43.5340, lng: 172.6370, type: 'food', time: '18:30',
+        desc: '基督城30+摊位美食市场！最后一晚丰盛晚餐。可加工海钓鱼获。',
+        budget: '人均NZ$25-40 / 3人约NZ$75-120',
+        detail: '地址：96 Oxford Terrace, Christchurch Central City\n营业时间：7:00-21:00（周三）\n30+美食摊位：海鲜、亚洲菜、披萨、汉堡\n部分摊位可帮忙加工自带的鱼获\nNew Regent Street彩色历史街区就在旁边',
+        pay: { cash: 1, card: 1 },
+        gmap: 'Riverside+Market+Christchurch'
+      }
+    ]
+  },
+
+  // ── Day 11: 基督城→上海 ──
+  {
+    id: 11, label: 'D11 返沪', date: '2/18 周四', title: '基督城→上海（新航SQ298+SQ826）', color: '#86868b',
+    locations: [
+      {
+        name: '基督城机场 CHC（还车）', lat: -43.4894, lng: 172.5322, type: 'transport', time: '08:30',
+        desc: '基督城机场还车（同城还车，无异地费）。Ezi/Apex/Budget等在机场停车场内。',
+        budget: '同城还车无额外费用',
+        detail: '全程约2,200km总里程\n10天租车总费用约NZ$1,300-2,000\n同城还车（基督城取→基督城还）无异地费\n建议提前30分钟到机场还车',
+        gmap: 'Christchurch+Airport+Rental+Car+Return'
+      },
+      {
+        name: '新加坡樟宜机场（转机）', lat: 1.3592, lng: 103.9895, type: 'transport', time: '17:00',
+        desc: 'SQ298 基督城10:50→新加坡17:00（A350，约10h50min）。转机约8h，樟宜机场休息购物。',
+        budget: '含在新航开口程机票中',
+        detail: '全程新航一张票，行李直挂上海\n新加坡转机可在樟宜机场休息购物、游泳、看电影\nJewel星耀樟宜（如出关）\nYOTELAIR可按小时休息',
+        gmap: 'Singapore+Changi+Airport'
+      },
+      {
+        name: '上海浦东机场 PVG', lat: 31.1443, lng: 121.8083, type: 'transport', time: '06:35+1',
+        desc: 'SQ826 新加坡01:15→上海06:35（约5h20min）。行程结束！',
+        budget: '含在新航开口程中',
+        detail: '2/19早上到达上海浦东\n全程新航联程，行李直挂\n建议提前3小时到基督城机场\n总飞行时间约16h（含转机）',
         gmap: 'Shanghai+Pudong+Airport+Terminal+2'
       }
     ]
@@ -697,12 +679,12 @@ const DAYS = [
 
 function overviewContent() {
   return `
-<div class="hero"><h1>悉尼+新西兰南岛行程</h1><p class="subtitle">2027年2月7日 — 2月18日 · 3人自驾 · 12天</p></div>
+<div class="hero"><h1>悉尼+新西兰南岛行程</h1><p class="subtitle">2027年2月7日 — 2月18日 · 3人自驾 · 12天 · 箭镇淘金+古堡+海钓</p></div>
 <div class="info-grid">
   <div class="info-card"><div class="label">出行人</div><div class="value">20岁女儿 + 50多岁父母</div></div>
   <div class="info-card"><div class="label">交通方式</div><div class="value">Opal卡+渡轮 / 南岛自驾</div></div>
-  <div class="info-card"><div class="label">航班</div><div class="value">新航去程 + 新西兰航空回程</div></div>
-  <div class="info-card"><div class="label">预估总费用</div><div class="value">3人约 ¥6.2-9.5万</div></div>
+  <div class="info-card"><div class="label">航班</div><div class="value">新航开口程 PVG→SYD / CHC→PVG</div></div>
+  <div class="info-card"><div class="label">预估总费用</div><div class="value">3人约 ¥6.3-9.5万</div></div>
 </div>
 <div class="section-head">行程概览</div>
 <div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
@@ -722,25 +704,25 @@ function overviewContent() {
   <strong>右舵左行！</strong>与国内相反。<br>
   Te Anau到Milford Sound 118km<span class="warn">无加油站</span>——Te Anau加满！<br>
   库克山村无加油站——Twizel加满！<br>
-  南景公路沿途加油站少——Tuatapere加满！<br>
   南岛多路段无手机信号——提前下载Google Maps离线地图。<br>
-  <strong>异地还车</strong>：基督城取车→皇后镇还车。<br>
+  <strong>同城还车</strong>：基督城取车→基督城还车，无异地费。<br>
   中国驾照需NZTA认证英文翻译件（租租车可在线办理）。
 </div>
 <div class="section-head">预订优先级</div>
 <div class="pay-summary">
   <h4>📅 按紧俏程度排序</h4>
-  1. 国际机票（新航去程+新西兰航空回程）— <span class="warn">提前6-9个月</span><br>
+  1. 国际机票（新航开口程）— <span class="warn">提前6-9个月</span><br>
   2. 蒂卡波湖住宿 — <span class="warn">提前6个月</span><br>
   3. 库克山Hermitage酒店 — <span class="warn">提前6个月</span><br>
-  4. 皇后镇住宿（3晚）— <span class="warn">提前6个月</span><br>
+  4. Castle Claremont古堡 — <span class="warn">提前3-6个月</span><br>
   5. 悉尼→基督城航班 — 提前3个月<br>
-  6. 皇后镇→奥克兰→上海航班 — 提前3个月<br>
-  7. 米尔福德峡湾游船 — 提前1-3个月<br>
-  8. 租车+驾照翻译件（异地还车）— 提前2-4周<br>
+  6. 米尔福德峡湾游船 — 提前1-3个月<br>
+  7. 阿卡罗阿海钓 — 提前1-2周<br>
+  8. 租车+驾照翻译件 — 提前2-4周<br>
   9. 蒂阿瑙萤火虫洞 — 提前2-4周<br>
   10. 蒂卡波观星团 — 提前2周<br>
-  11. 皇后镇缆车+Luge — 可现场买
+  11. 箭镇住宿 — 提前2-4周<br>
+  12. 皇后镇缆车+Luge — 可现场买
 </div>
 <div class="section-head">图例</div>
 <div class="legend">
